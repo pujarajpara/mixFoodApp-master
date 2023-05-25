@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "841542076570",
+    "project_id": "mixfoodapp-9698a",
+    "storage_bucket": "mixfoodapp-9698a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841542076570:android:22e54ffacc58bc8023b723",
+        "android_client_info": {
+          "package_name": "com.example.mixfoodapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841542076570-2agbl9jvp9sr9ob67rrcvga4bj91eu35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1lJEZDz38gmwYMBx2uH41UpSfxOH0XhI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841542076570-2agbl9jvp9sr9ob67rrcvga4bj91eu35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

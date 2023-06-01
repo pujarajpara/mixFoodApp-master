@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mixfoodapp/Page/home.dart';
 import 'package:mixfoodapp/Page/notification.dart';
 import 'package:mixfoodapp/Page/recipedetails.dart';
 
@@ -9,7 +10,7 @@ import '../Constants/Color.dart';
 import '../Constants/model.dart';
 
 class saveIcon extends StatefulWidget {
-  const saveIcon({Key? key}) : super(key: key);
+  const saveIcon({Key? key, required int index, required Models Models}) : super(key: key);
 
   @override
   State<saveIcon> createState() => _saveIconState();

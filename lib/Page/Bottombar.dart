@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mixfoodapp/Constants/model.dart';
 import 'package:mixfoodapp/Page/person.dart';
 import 'package:mixfoodapp/Page/saveIcon.dart';
 
@@ -18,11 +19,11 @@ class Bottomtabbar extends StatefulWidget {
 
 class _BottomtabbarState extends State<Bottomtabbar> {
   int currentTab = 0;
-  final screens = const <Widget>[
+  final screens =  <Widget>[
     home(),
-    saveIcon(),
-    notification(),
-    person(),
+    saveIcon(index: listmodels.length, Models: null,),
+    const notification(),
+    const person(),
 
   ];
   final PageStorageBucket bucket = PageStorageBucket();

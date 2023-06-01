@@ -21,7 +21,7 @@ class _recipedeState extends State<recipede> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        title: GestureDetector(
+        leading: GestureDetector(
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => saveIcon()));

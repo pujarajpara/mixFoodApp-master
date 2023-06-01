@@ -221,3 +221,44 @@ List<Model2> myprofileinf = [
     rating: '4.7',
   ),
 ];
+
+class Model3 {
+  String my1;
+  String time;
+  String saladname;
+  String breafast;
+  String appetizer;
+  String noodles;
+
+  Model3({
+    required this.my1,
+    required this.time,
+    required this.saladname,
+    required this.breafast,
+    required this.appetizer,
+    required this.noodles,
+  });
+}
+
+List<Model3> salad = [
+  Model3(
+      my1: 'Assets/salad1.png',
+      time: '10 Mins',
+      saladname: 'Pepeer sweetcorn \nramen ',
+      breafast: 'Assets/breakfast2.png',
+      appetizer: 'Assets/pasta.png',
+    noodles: 'Assets/noodles1.png'
+      ),
+  Model3(
+      my1: 'Assets/salad1.png',
+      time: '10 Mins',
+      saladname: 'Cheddar cheese \nand shell salad',
+      breafast: 'Assets/breakfast2.png',
+      appetizer: 'Assets/pasta.png', noodles: 'Assets/noodles1.png',),
+  Model3(
+      my1: 'Assets/salad1.png',
+      time: '10 Mins',
+      saladname: 'Pepper sweetcorn \nramen1',
+      breafast: 'Assets/breakfast2.png', appetizer: 'Assets/pasta.png', noodles: 'Asstes/noodles1.png',
+  )
+];

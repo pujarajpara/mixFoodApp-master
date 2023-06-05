@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mixfoodapp/Page/home.dart';
 import 'package:mixfoodapp/Page/recipedetails.dart';
 
 import 'package:mixfoodapp/Constants/Color.dart';
@@ -16,13 +15,12 @@ class saveIcon extends StatefulWidget {
   State<saveIcon> createState() => _saveIconState();
 }
 
-bool isSave = true;
-
 class _saveIconState extends State<saveIcon> {
   List icon = ["Video", "recipe"];
   int isSec = 0;
 
   List savevideo1 = [];
+  bool isSave = true;
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +125,8 @@ class _saveIconState extends State<saveIcon> {
                                         ),
                                       ),
                                       Padding(
-                                        padding:
-                                            EdgeInsets.only(top: 80, left: 90),
+                                        padding: const EdgeInsets.only(
+                                            top: 80, left: 90),
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(33),
@@ -204,7 +202,8 @@ class _saveIconState extends State<saveIcon> {
                               onTap: () {
                                 setState(() {
                                   if (isSave = true) {
-                                  } else {}
+
+                                   }
                                 });
                               },
                               child: Container(

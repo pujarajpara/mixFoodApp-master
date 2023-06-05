@@ -199,15 +199,23 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                             color: ColorsNeutral.Neutral0,
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: save == false
-                              ? const Icon(
-                                  Icons.bookmark_add_outlined,
-                                  size: 18,
-                                )
-                              : const Icon(
-                                  Icons.bookmark_remove_outlined,
-                                  size: 18,
-                                ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const saveIcon()));
+                            },
+                            child: save == false
+                                ? const Icon(
+                                    Icons.bookmark_add_outlined,
+                                    size: 18,
+                                  )
+                                : const Icon(
+                                    Icons.bookmark_remove_outlined,
+                                    size: 18,
+                                  ),
+                          ),
                         ),
                       ),
                     ],

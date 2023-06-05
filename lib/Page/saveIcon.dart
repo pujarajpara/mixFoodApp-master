@@ -201,9 +201,7 @@ class _saveIconState extends State<saveIcon> {
                             child: InkWell(
                               onTap: () {
                                 setState(() {
-                                  if (isSave = true) {
-
-                                   }
+                                  if (isSave = true) {}
                                 });
                               },
                               child: Container(

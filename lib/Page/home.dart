@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
@@ -25,7 +24,8 @@ class _homeState extends State<home> with TickerProviderStateMixin {
     "Appetizer",
     "Noodle",
   ];
-
+  bool save = false;
+  List savevideo = [];
 
   final PageStorageBucket bucket = PageStorageBucket();
   @override
@@ -85,13 +85,13 @@ class _homeState extends State<home> with TickerProviderStateMixin {
         ]),
       ),
       SizedBox(
-        height: 240,
+        height: 290,
         width: double.infinity,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           padding: const EdgeInsets.only(left: 15, top: 20),
-          itemCount: listmodels.length,
+          itemCount: saverec.length,
           itemBuilder: (_, index) {
             return Column(
               children: [
@@ -106,7 +106,7 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage(
-                                listmodels[index].freslist,
+                                saverec[index].saverecipe,
                               ),
                               fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(15),
@@ -199,31 +199,52 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                             color: ColorsNeutral.Neutral0,
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => saveIcon(index:index,
-                                                  Models: listmodel2[index],
-                                                )));
-                                  },
-                                  child: Icon(
-                                    Icons.bookmark_remove_outlined,
-                                    color: ColorsNeutral.Neutral90,
-                                    size: 18,
-                                  ),
+                          child: save == false
+                              ? const Icon(
+                                  Icons.bookmark_add_outlined,
+                                  size: 18,
+                                )
+                              : const Icon(
+                                  Icons.bookmark_remove_outlined,
+                                  size: 18,
                                 ),
-                              ]),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: 20))
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: 150,
+                      ),
+                      child: Text(saverec[index].saveretitle,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: ColorsNeutral.Neutral90,
+                              fontWeight: FontWeight.w600)),
+                    ),
+                    Icon(Icons.more_horiz)
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 210,
+                  ),
+                  child: Row(
+                    children: [
+                      Image.asset(saverec[index].unsplash1),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(saverec[index].devlop)
+                    ],
+                  ),
+                )
               ],
             );
           },
@@ -233,7 +254,7 @@ class _homeState extends State<home> with TickerProviderStateMixin {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(25, 20, 00, 20),
+              padding: const EdgeInsets.fromLTRB(20, 10, 00, 20),
               child: Row(
                 children: [
                   Text(
@@ -254,7 +275,7 @@ class _homeState extends State<home> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             TabBar(
-              padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
+              padding: EdgeInsets.only(top: 10, bottom: 10, left: 15),
               unselectedLabelColor: Colors.black,
               // unselectedLabelStyle: Colors.black,
               indicator: BoxDecoration(
@@ -382,16 +403,10 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                           ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.bookmark_remove_outlined,
-                                                color: ColorsNeutral.Neutral90,
-                                                size: 18,
-                                              ),
-                                            ],
+                                          child: Icon(
+                                            Icons.bookmark_remove_outlined,
+                                            color: ColorsNeutral.Neutral90,
+                                            size: 18,
                                           ),
                                         ),
                                       ),
@@ -702,23 +717,17 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                                         padding: const EdgeInsets.only(
                                             right: 10, top: 40),
                                         child: Container(
-                                          height: 24,
+                                          height: 50,
                                           width: 24,
                                           decoration: BoxDecoration(
                                             color: ColorsNeutral.Neutral0,
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                           ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.bookmark_remove_outlined,
-                                                color: ColorsNeutral.Neutral90,
-                                                size: 18,
-                                              ),
-                                            ],
+                                          child: Icon(
+                                            Icons.bookmark_add_outlined,
+                                            color: ColorsNeutral.Neutral90,
+                                            size: 18,
                                           ),
                                         ),
                                       ),
@@ -753,104 +762,6 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                     },
                   ),
                 ])),
-            //
-            // SizedBox(
-            //   height: 250,
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(left: 15),
-            //     child: ListView.builder(
-            //       scrollDirection: Axis.horizontal,
-            //       itemCount: listmodels.length,
-            //       itemBuilder: (context, index) {
-            //         return Stack(
-            //           children: [
-            //             Padding(
-            //               padding: const EdgeInsets.only(top: 50),
-            //               child: Container(
-            //                 margin: const EdgeInsets.symmetric(horizontal: 10),
-            //                 height: 250,
-            //                 width: 170,
-            //                 decoration: BoxDecoration(
-            //                   color: const Color(0xfff1f1f1),
-            //                   borderRadius: BorderRadius.circular(20),
-            //                 ),
-            //                 child: Padding(
-            //                   padding: const EdgeInsets.only(
-            //                     top: 35,
-            //                   ),
-            //                   child: Padding(
-            //                     padding: const EdgeInsets.only(
-            //                       top: 40,
-            //                     ),
-            //                     child: Column(
-            //                       crossAxisAlignment: CrossAxisAlignment.center,
-            //                       children: [
-            //                         Text(
-            //                           textAlign: TextAlign.center,
-            //                           listmodels[index].poppuler1,
-            //                           style: TextStyle(
-            //                               color: ColorsNeutral.Neutral90,
-            //                               fontSize: 16,
-            //                               fontWeight: FontWeight.w600),
-            //                         ),
-            //                         Row(
-            //                           mainAxisAlignment:
-            //                               MainAxisAlignment.spaceBetween,
-            //                           children: [
-            //                             Padding(
-            //                               padding: const EdgeInsets.only(
-            //                                   left: 15, top: 60),
-            //                               child: Text(
-            //                                 "10 min",
-            //                                 style: (TextStyle(
-            //                                     color: ColorsNeutral.Neutral90,
-            //                                     fontSize: 12,
-            //                                     fontWeight: FontWeight.w600)),
-            //                               ),
-            //                             ),
-            //                             Padding(
-            //                               padding: const EdgeInsets.only(
-            //                                   right: 15, top: 60),
-            //                               child: Column(
-            //                                 children: [
-            //                                   Image.asset(
-            //                                     ("Assets/Bookmark123.png"),
-            //                                   ),
-            //                                 ],
-            //                               ),
-            //                             ),
-            //                           ],
-            //                         )
-            //                       ],
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ),
-            //             ),
-            //             Positioned(
-            //               bottom: 35,
-            //               right: 140,
-            //               child: Text(
-            //                 "Time",
-            //                 style: TextStyle(
-            //                     fontSize: 12,
-            //                     color: ColorsNeutral.Neutral30,
-            //                     fontWeight: FontWeight.w400),
-            //                 textAlign: TextAlign.center,
-            //               ),
-            //             ),
-            //             Positioned(
-            //                 left: 20,
-            //                 top: -15,
-            //                 child: Image.asset(
-            //                   listmodels[index].ramen,
-            //                 )),
-            //           ],
-            //         );
-            //       },
-            //     ),
-            //   ),
-            // ),
 
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 30),
@@ -950,39 +861,39 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                     ),
                   ]),
             ),
-            const Padding(padding: EdgeInsets.only(right: 20)),
-            SizedBox(
-              height: 180,
-              child: InkWell(
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 1),
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: listmodel2.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Image.asset(
-                                listmodel2[index].poppulerpers,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 2, bottom: 10),
-                              child: Text(
-                                listmodel2[index].Poppulername,
-                              ),
-                            ),
-                          ],
-                        );
-                      }),
-                ),
-              ),
-            ),
+            // const Padding(padding: EdgeInsets.only(right: 20)),
+            // SizedBox(
+            //   height: 180,
+            //   child: InkWell(
+            //     onTap: () {},
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(left: 1),
+            //       child: ListView.builder(
+            //           scrollDirection: Axis.horizontal,
+            //           itemCount: listmodel2.length,
+            //           itemBuilder: (context, index) {
+            //             return Column(
+            //               mainAxisAlignment: MainAxisAlignment.start,
+            //               children: [
+            //                 Padding(
+            //                   padding: const EdgeInsets.all(10),
+            //                   child: Image.asset(
+            //                     listmodel2[index].poppulerpers,
+            //                   ),
+            //                 ),
+            //                 Padding(
+            //                   padding:
+            //                       const EdgeInsets.only(left: 2, bottom: 10),
+            //                   child: Text(
+            //                     listmodel2[index].Poppulername,
+            //                   ),
+            //                 ),
+            //               ],
+            //             );
+            //           }),
+            //     ),
+            //   ),
+            // ),
             // PageStorage(
             //     child: currentScreen, bucket: bucket),
           ],

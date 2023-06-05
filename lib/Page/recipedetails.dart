@@ -76,15 +76,15 @@ class _recipedeState extends State<recipede> {
             ClipRRect(
               borderRadius: BorderRadius.circular(33),
               child: BackdropFilter(
-                filter: new ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+                filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
                 child: Container(
                   height: 55,
                   width: 60,
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 1),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       shape: BoxShape.circle, color: Color(0x4A303030)),
-                  child: Icon(
+                  child: const Icon(
                     Icons.play_arrow_rounded,
                     color: Colors.white,
                     size: 40,

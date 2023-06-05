@@ -15,9 +15,9 @@ class Models {
   String make;
   String burger;
   String recentmake1;
-  String poppulerpers;
-  String Poppulername;
-  String savev1;
+  // String poppulerpers;
+  // String Poppulername;
+  // String savev1;
 
   Models({
     required this.freslist,
@@ -31,9 +31,9 @@ class Models {
     required this.make,
     required this.burger,
     required this.recentmake1,
-    required this.poppulerpers,
-    required this.Poppulername,
-    required this.savev1,
+    // required this.poppulerpers,
+    // required this.Poppulername,
+    // required this.savev1,
   });
 }
 
@@ -50,9 +50,9 @@ List<Models> listmodels = [
     make: 'By Niki Samantha',
     burger: 'Indonesian \nchicken burger',
     recentmake1: 'By Adriannna Curl',
-    poppulerpers: '',
-    Poppulername: '',
-    savev1: '',
+    // poppulerpers: '',
+    // Poppulername: '',
+    // savev1: '',
   ),
   Models(
     freslist: 'Assets/video5.png',
@@ -66,9 +66,9 @@ List<Models> listmodels = [
     make: 'By Troyan Smith',
     burger: 'Home made \ncute pancake,',
     recentmake1: 'By James Wolden',
-    poppulerpers: '',
-    Poppulername: '',
-    savev1: '',
+    // poppulerpers: '',
+    // Poppulername: '',
+    // savev1: '',
   ),
 ];
 List<Models> listmodel2 = [
@@ -84,9 +84,9 @@ List<Models> listmodel2 = [
     make: 'By Troyan Smith',
     burger: 'Indonesian \nchicken burger',
     recentmake1: 'By Adrianna Curl',
-    poppulerpers: 'Assets/Avatar1.png',
-    Poppulername: 'Trayan \nSmaith',
-    savev1: 'Assets/savevide1.png',
+    // poppulerpers: 'Assets/Avatar1.png',
+    // Poppulername: 'Trayan \nSmaith',
+    // savev1: 'Assets/savevide1.png',
   ),
   Models(
     freslist: '',
@@ -100,9 +100,9 @@ List<Models> listmodel2 = [
     make: 'By Troyan Smith',
     burger: 'Home made \ncute pancake',
     recentmake1: 'By James Wolden',
-    poppulerpers: 'Assets/Avatar2.png',
-    Poppulername: 'James \nWolden',
-    savev1: 'Assets/savevideo2.png',
+    // poppulerpers: 'Assets/Avatar2.png',
+    // Poppulername: 'James \nWolden',
+    // savev1: 'Assets/savevideo2.png',
   ),
   Models(
     freslist: '',
@@ -116,9 +116,9 @@ List<Models> listmodel2 = [
     make: 'By Troyan Smith',
     burger: 'How to make \nseafood friend friend',
     recentmake1: 'By Roberta Anny',
-    poppulerpers: 'Assets/Avatar3.png',
-    Poppulername: 'Niki \nSamantha',
-    savev1: '',
+    // poppulerpers: 'Assets/Avatar3.png',
+    // Poppulername: 'Niki \nSamantha',
+    // savev1: '',
   ),
 ];
 
@@ -151,7 +151,7 @@ List<Model> saverec = [
     bookmark: 'Assets/Bookmark.png',
     text: '5.0',
     playbutton: 'Assets/Playbutton1.png',
-    saveretitle: 'Easy oatmeal recipe',
+    saveretitle: 'How to make sushi at home',
     unsplash1: 'Assets/unsplash1.png',
     devlop: 'By robeera anny',
   ),
@@ -170,7 +170,7 @@ List<Model> saverec = [
       duration: '15:10',
       playbutton: 'Assets/Playbutton1.png',
       text: '4.9',
-      saveretitle: 'How to make sushi at home',
+      saveretitle: ' Easy oatmeal recipe',
       unsplash1: 'Assets/unsplash3.png',
       devlop: 'By james  Wolden'),
 ];
@@ -247,18 +247,21 @@ List<Model3> salad = [
       saladname: 'Pepeer sweetcorn \nramen ',
       breafast: 'Assets/breakfast2.png',
       appetizer: 'Assets/pasta.png',
-    noodles: 'Assets/noodles1.png'
-      ),
+      noodles: 'Assets/noodles1.png'),
   Model3(
-      my1: 'Assets/salad1.png',
-      time: '10 Mins',
-      saladname: 'Cheddar cheese \nand shell salad',
-      breafast: 'Assets/breakfast2.png',
-      appetizer: 'Assets/pasta.png', noodles: 'Assets/noodles1.png',),
+    my1: 'Assets/salad1.png',
+    time: '10 Mins',
+    saladname: 'Cheddar cheese \nand shell salad',
+    breafast: 'Assets/breakfast2.png',
+    appetizer: 'Assets/pasta.png',
+    noodles: 'Assets/noodles1.png',
+  ),
   Model3(
-      my1: 'Assets/salad1.png',
-      time: '10 Mins',
-      saladname: 'Pepper sweetcorn \nramen1',
-      breafast: 'Assets/breakfast2.png', appetizer: 'Assets/pasta.png', noodles: 'Asstes/noodles1.png',
+    my1: 'Assets/salad1.png',
+    time: '10 Mins',
+    saladname: 'Pepper sweetcorn \nramen1',
+    breafast: 'Assets/breakfast2.png',
+    appetizer: 'Assets/pasta.png',
+    noodles: 'Assets/noodles1.png',
   )
 ];

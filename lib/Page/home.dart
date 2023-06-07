@@ -1,13 +1,14 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
 
 import 'package:mixfoodapp/Constants/text.dart';
 import 'package:mixfoodapp/Page/saveIcon.dart';
+
+List saveVideo = [];
+
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
@@ -25,7 +26,6 @@ class _homeState extends State<home> with TickerProviderStateMixin {
     "Noodle",
   ];
   bool save = false;
-  List savevideo = [];
 
   final PageStorageBucket bucket = PageStorageBucket();
   @override
@@ -200,12 +200,16 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const saveIcon()));
-                            },
+                             onTap: () {
+
+                              setState(() {
+                                final data = saverec[index]      ;
+                                saveVideo.add(data);
+                              });
+
+                              print('----------- $saveVideo ------1----');
+
+                             },
                             child: save == false
                                 ? const Icon(
                                     Icons.bookmark_add_outlined,
@@ -233,10 +237,10 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                               color: ColorsNeutral.Neutral90,
                               fontWeight: FontWeight.w600)),
                     ),
-                    Icon(Icons.more_horiz)
+                    const Icon(Icons.more_horiz)
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Padding(
@@ -246,7 +250,7 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                   child: Row(
                     children: [
                       Image.asset(saverec[index].unsplash1),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(saverec[index].devlop)

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:mixfoodapp/Page/home.dart';
 import 'package:mixfoodapp/Page/recipedetails.dart';
 
 import 'package:mixfoodapp/Constants/Color.dart';
@@ -75,8 +76,9 @@ class _saveIconState extends State<saveIcon> {
             child: ListView.builder(
               padding: const EdgeInsets.only(left: 15, top: 25),
               scrollDirection: Axis.vertical,
-              itemCount: saverec.length,
+              itemCount: saveVideo.length,
               itemBuilder: (_, index) {
+
                 return Column(
                   children: [
                     Padding(
@@ -87,7 +89,7 @@ class _saveIconState extends State<saveIcon> {
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
-                                      saverec[index].saverecipe,
+                                      saveVideo[index].saverecipe,
                                     ),
                                     fit: BoxFit.cover),
                                 borderRadius: BorderRadius.circular(15),
@@ -116,7 +118,7 @@ class _saveIconState extends State<saveIcon> {
                                               size: 18,
                                             ),
                                             Text(
-                                              saverec[index].text,
+                                              saveVideo[index].text,
                                               style: TextStyle(
                                                   color: ColorsNeutral.Neutral0,
                                                   fontSize: 14),
@@ -201,7 +203,11 @@ class _saveIconState extends State<saveIcon> {
                             child: InkWell(
                               onTap: () {
                                 setState(() {
-                                  if (isSave = true) {}
+                                  if (isSave = true) {
+                                    savevideo1.remove(false);
+                                  } else {
+                                    savevideo1.add(true);
+                                  }
                                 });
                               },
                               child: Container(
@@ -234,7 +240,7 @@ class _saveIconState extends State<saveIcon> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(saverec[index].saveretitle,
+                          Text(saveVideo[index].saveretitle,
                               style: TextStyle(
                                   fontSize: 16,
                                   color: ColorsNeutral.Neutral90,
@@ -247,12 +253,12 @@ class _saveIconState extends State<saveIcon> {
                       padding: const EdgeInsets.only(right: 20, left: 5),
                       child: Row(
                         children: [
-                          Image.asset(saverec[index].unsplash1),
+                          Image.asset(saveVideo[index].unsplash1),
                           const SizedBox(
                             width: 8,
                           ),
                           Text(
-                            saverec[index].devlop,
+                            saveVideo[index].devlop,
                             style: TextStyle(
                                 color: ColorsNeutral.Neutral40,
                                 fontWeight: FontWeight.w400,

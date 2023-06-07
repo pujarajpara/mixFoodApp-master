@@ -9,7 +9,6 @@ import 'package:mixfoodapp/Page/saveIcon.dart';
 
 List saveVideo = [];
 
-
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
 
@@ -200,16 +199,13 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: InkWell(
-                             onTap: () {
-
+                            onTap: () {
                               setState(() {
-                                final data = saverec[index]      ;
+                                final data = saverec[index];
                                 saveVideo.add(data);
                               });
 
-                              print('----------- $saveVideo ------1----');
-
-                             },
+                            },
                             child: save == false
                                 ? const Icon(
                                     Icons.bookmark_add_outlined,

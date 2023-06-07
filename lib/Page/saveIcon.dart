@@ -7,6 +7,8 @@ import 'package:mixfoodapp/Page/recipedetails.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
 
+List savevideo1 = [];
+
 class saveIcon extends StatefulWidget {
   const saveIcon({
     Key? key,
@@ -19,9 +21,13 @@ class saveIcon extends StatefulWidget {
 class _saveIconState extends State<saveIcon> {
   List icon = ["Video", "recipe"];
   int isSec = 0;
-
-  List savevideo1 = [];
   bool isSave = true;
+
+  void removeItem(int index) {
+    setState(() {
+      saveVideo.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +84,6 @@ class _saveIconState extends State<saveIcon> {
               scrollDirection: Axis.vertical,
               itemCount: saveVideo.length,
               itemBuilder: (_, index) {
-
                 return Column(
                   children: [
                     Padding(
@@ -203,11 +208,7 @@ class _saveIconState extends State<saveIcon> {
                             child: InkWell(
                               onTap: () {
                                 setState(() {
-                                  if (isSave = true) {
-                                    savevideo1.remove(false);
-                                  } else {
-                                    savevideo1.add(true);
-                                  }
+                                  removeItem(index);
                                 });
                               },
                               child: Container(

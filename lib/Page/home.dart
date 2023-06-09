@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
@@ -7,7 +8,15 @@ import 'package:mixfoodapp/Constants/model.dart';
 import 'package:mixfoodapp/Constants/text.dart';
 import 'package:mixfoodapp/Page/saveIcon.dart';
 
-List saveVideo = [];
+List<Model> saveVideo = [];
+
+void saveVideoCheck(Model saveAllVideos) {
+  if (saveVideo.contains(saveAllVideos)) {
+    saveVideo.remove(saveAllVideos);
+  } else {
+    saveVideo.add(saveAllVideos);
+  }
+}
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
@@ -24,7 +33,9 @@ class _homeState extends State<home> with TickerProviderStateMixin {
     "Appetizer",
     "Noodle",
   ];
+
   bool save = false;
+  int issave = 0;
 
   final PageStorageBucket bucket = PageStorageBucket();
   @override
@@ -92,6 +103,7 @@ class _homeState extends State<home> with TickerProviderStateMixin {
           padding: const EdgeInsets.only(left: 15, top: 20),
           itemCount: saverec.length,
           itemBuilder: (_, index) {
+            final data = saverec[index];
             return Column(
               children: [
                 Padding(
@@ -198,22 +210,38 @@ class _homeState extends State<home> with TickerProviderStateMixin {
                             color: ColorsNeutral.Neutral0,
                             borderRadius: BorderRadius.circular(20),
                           ),
+
+                          // child: InkWell(
+                          //   onTap: () {
+                          //     setState(() {
+                          //       if (!saveVideo.contains(saveVideo)) {
+                          //         saveVideo.add(saveVideo);
+                          //       }
+                          //     });
+                          //   },
+                          //   child: Icon(
+                          //       save
+                          //           ? Icons.bookmark_add_outlined
+                          //           : Icons.favorite_border,
+                          //       color: save ? Colors.red : null),
+                          // ),
                           child: InkWell(
                             onTap: () {
                               setState(() {
                                 final data = saverec[index];
-                                saveVideo.add(data);
+                                saveVideoCheck(data);
                               });
-
                             },
-                            child: save == false
+                            child: saveVideo.contains(data)
                                 ? const Icon(
-                                    Icons.bookmark_add_outlined,
+                                    Icons.bookmark,
                                     size: 18,
+                                    color: Colors.red,
                                   )
                                 : const Icon(
-                                    Icons.bookmark_remove_outlined,
+                                    Icons.bookmark_add_outlined,
                                     size: 18,
+                                    color: Colors.black,
                                   ),
                           ),
                         ),
@@ -283,7 +311,7 @@ class _homeState extends State<home> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             TabBar(
-              padding: EdgeInsets.only(top: 10, bottom: 10, left: 15),
+              padding: const EdgeInsets.only(top: 10, bottom: 10, left: 15),
               unselectedLabelColor: Colors.black,
               // unselectedLabelStyle: Colors.black,
               indicator: BoxDecoration(

@@ -218,17 +218,11 @@ class _saveIconState extends State<saveIcon> {
                                   color: ColorsNeutral.Neutral0,
                                   borderRadius: BorderRadius.circular(20),
                                 ),
-                                child: isSave == true
-                                    ? Icon(
-                                        Icons.bookmark_remove_outlined,
-                                        color: ColorsPrimary.Primary50,
-                                        size: 18,
-                                      )
-                                    : Icon(
-                                        Icons.bookmark_add_outlined,
-                                        color: ColorsPrimary.Primary50,
-                                        size: 18,
-                                      ),
+                                child: const Icon(
+                                  Icons.bookmark_remove,
+                                  color: Colors.red,
+                                  size: 18,
+                                ),
                               ),
                             ),
                           ),

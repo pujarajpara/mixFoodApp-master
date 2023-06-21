@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/model.dart';
-import 'package:mixfoodapp/Page/person.dart';
-import 'package:mixfoodapp/Page/saveIcon.dart';
-
-
+import 'package:mixfoodapp/Page/persondetails.dart';
+import 'package:mixfoodapp/Page/saverecipe.dart';
 
 import 'createrecipe.dart';
 import 'notification.dart';
@@ -19,15 +16,14 @@ class Bottomtabbar extends StatefulWidget {
 
 class _BottomtabbarState extends State<Bottomtabbar> {
   int currentTab = 0;
-  final screens =  <Widget>[
-    home(),
-    saveIcon(),
+  final screens = [
+    const Home(),
+    const saveIcon(),
     const notification(),
     const person(),
-
   ];
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = home();
+  Widget currentScreen = const Home();
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +34,15 @@ class _BottomtabbarState extends State<Bottomtabbar> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const createrecipe()));
           },
-          child: Icon(
+          backgroundColor: Colors.red,
+          child: const Icon(
             Icons.add,
-          ),
-          backgroundColor: Colors.red),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          )),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          child: Container(
+          shape: const CircularNotchedRectangle(),
+          child: SizedBox(
             height: 60,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,7 +54,7 @@ class _BottomtabbarState extends State<Bottomtabbar> {
                       minWidth: 70,
                       onPressed: () {
                         setState(() {
-                          currentScreen = home();
+                          currentScreen = const Home();
                           currentTab = 0;
                         });
                       },
@@ -71,7 +68,7 @@ class _BottomtabbarState extends State<Bottomtabbar> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 25,
                     ),
                     MaterialButton(
@@ -115,7 +112,7 @@ class _BottomtabbarState extends State<Bottomtabbar> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 40,
                     ),
                     MaterialButton(
@@ -142,11 +139,5 @@ class _BottomtabbarState extends State<Bottomtabbar> {
             ),
           )),
     );
-    //   ),
-    //),
   }
-
-
-
-
 }

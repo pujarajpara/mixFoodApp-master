@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 
@@ -55,7 +54,7 @@ class _notificationState extends State<notification> {
                         height: 34,
                         child: Center(
                           child: Text(
-                            notification[index],
+                            notification[index].toString(),
                             style: (TextStyle(
                                 color:
                                     index == isSec ? Colors.white : Colors.red,

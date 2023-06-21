@@ -1,10 +1,12 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mixfoodapp/Constants/Color.dart';
-import 'package:mixfoodapp/Page/saveIcon.dart';
+import 'package:mixfoodapp/Constants/model.dart';
+import 'package:mixfoodapp/Page/home.dart';
+import 'package:mixfoodapp/Page/saverecipe.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IngredientModel {
   String type;
@@ -24,6 +26,19 @@ class _createrecipeState extends State<createrecipe> {
   int isSec = 0;
   List<IngredientModel> ingredient = [IngredientModel(qty: '', type: '')];
 
+  Future<void> saveData(String inputText1, String inputText2) async {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setString('text1', qtyTxt.text);
+    await prefs.setString('text2', typeTxt.text);
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Home(),
+      ),
+    );
+  }
+
   void addEmptyIngredient() {
     setState(() {
       ingredient.add(IngredientModel(qty: '', type: ''));
@@ -36,6 +51,15 @@ class _createrecipeState extends State<createrecipe> {
     });
   }
 
+  // void addIngredient(int index) {
+  //  setState(() {
+  //    ingredient.add(index);
+  //  });
+  // }
+
+  final typeTxt = TextEditingController();
+  final qtyTxt = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +67,9 @@ class _createrecipeState extends State<createrecipe> {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => saveIcon()));
+          onTap: () async {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const saveIcon()));
           },
           child: const Icon(
             Icons.arrow_back,
@@ -68,7 +92,7 @@ class _createrecipeState extends State<createrecipe> {
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 20),
             child: Text(
-              "Create recipe",
+              'Create recipe',
               style: TextStyle(
                 color: ColorsNeutral.Neutral90,
                 fontWeight: FontWeight.bold,
@@ -122,12 +146,10 @@ class _createrecipeState extends State<createrecipe> {
                   child: Center(
                     child: IconButton(
                         icon: const Icon(
-                          Icons.edit, color: Colors.red,
-                          // size: 20,
+                          Icons.edit,
+                          color: Colors.red,
                         ),
-                        onPressed: () {
-                          //your action
-                        }),
+                        onPressed: () {}),
                   ),
                 ),
               ),
@@ -139,14 +161,17 @@ class _createrecipeState extends State<createrecipe> {
               vertical: 30,
             ),
             child: TextFormField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    hintText: ' Bento lunch box ideas for work',
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: const BorderSide(color: Colors.red)))),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                hintText: ' Bento lunch box ideas for work',
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: const BorderSide(color: Colors.red),
+                ),
+              ),
+            ),
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
@@ -156,39 +181,36 @@ class _createrecipeState extends State<createrecipe> {
               borderRadius: BorderRadius.circular(15),
               color: ColorsNeutral.Neutral20,
             ),
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Image.asset("Assets/Serves.png")),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: Text(
-                      "Server",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                    ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Image.asset("Assets/Serves.png")),
+                const Padding(
+                  padding: EdgeInsets.only(left: 15),
+                  child: Text(
+                    "Server",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: 10,
-                    ),
-                    child: Text(
-                      "01",
-                      style: (TextStyle(
-                          fontSize: 14, color: ColorsNeutral.Neutral40)),
-                    ),
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Icon(Icons.arrow_forward),
-                  )
-                ],
-              ),
+                  child: Text(
+                    "01",
+                    style: (TextStyle(
+                        fontSize: 14, color: ColorsNeutral.Neutral40)),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Icon(Icons.arrow_forward),
+                )
+              ],
             ),
           ),
           Container(
@@ -199,39 +221,36 @@ class _createrecipeState extends State<createrecipe> {
               borderRadius: BorderRadius.circular(15),
               color: ColorsNeutral.Neutral20,
             ),
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Image.asset("Assets/cooktimeicon.png")),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: Text(
-                      "Cook time",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                    ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Image.asset("Assets/cooktimeicon.png")),
+                const Padding(
+                  padding: EdgeInsets.only(left: 15),
+                  child: Text(
+                    "Cook time",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: 10,
-                    ),
-                    child: Text(
-                      "45 min",
-                      style: (TextStyle(
-                          fontSize: 14, color: ColorsNeutral.Neutral40)),
-                    ),
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: Icon(Icons.arrow_forward),
-                  )
-                ],
-              ),
+                  child: Text(
+                    "45 min",
+                    style: (TextStyle(
+                        fontSize: 14, color: ColorsNeutral.Neutral40)),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Icon(Icons.arrow_forward),
+                ),
+              ],
             ),
           ),
           Padding(
@@ -253,56 +272,65 @@ class _createrecipeState extends State<createrecipe> {
                   key: UniqueKey(),
                   ingredientModel: ingredient[index],
                   index: index,
-                  remove: removeIngredient,
+                  remove: removeIngredient, add: (int index) {},
+                  // add: addIngredient,
                 );
               }),
           Padding(
             padding: const EdgeInsets.all(20),
             child: InkWell(
               onTap: addEmptyIngredient,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: const Text(
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
                   '+ Add Ingredient',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
                 ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 50),
-            child: InkWell(
-              onTap: () {
-                for (var element in ingredient) {
-                  print('-----');
-                  print(element.type);
-                  print(element.qty);
-                  print('-----');
-                }
-              },
-              child: Container(
-                height: 54,
-                width: 335,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10.0),
-                  ),
-                ),
-                child: const Center(
-                    child: Text(
-                  "Save my recipes",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                )),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 20, right: 20, bottom: 50),
+          //   child: InkWell(
+          //     onTap: () {
+          //       final inputText1 = qtyTxt.text;
+          //       final inputText2 = typeTxt.text;
+          //       saveData(inputText1, inputText2);
+          //       Navigator.push(context,
+          //           MaterialPageRoute(builder: (context) => const Home()));
+          //
+          //       // SharedPreferences sharedPrefrences =
+          //       //     await SharedPreferences.getInstance();
+          //       // sharedPrefrences.setString('qty', qtyTxt.text);
+          //       // sharedPrefrences.setString('type', typeTxt.text);
+          //       //
+          //       // Navigator.push(
+          //       //     context, MaterialPageRoute(builder: (context) => home()));
+          //     },
+          //     child: Container(
+          //       height: 54,
+          //       width: 335,
+          //       padding:
+          //           const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+          //       decoration: const BoxDecoration(
+          //         color: Colors.red,
+          //         borderRadius: BorderRadius.all(
+          //           Radius.circular(10.0),
+          //         ),
+          //       ),
+          //       child: const Center(
+          //         child: Text(
+          //           "Save my recipes",
+          //           style: TextStyle(
+          //             color: Colors.white,
+          //             fontSize: 16,
+          //             fontWeight: FontWeight.w600,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -310,16 +338,18 @@ class _createrecipeState extends State<createrecipe> {
 }
 
 class IngredientModule extends StatefulWidget {
-  const IngredientModule(
-      {Key? key,
-      required this.ingredientModel,
-      required this.remove,
-      required this.index})
-      : super(key: key);
+  const IngredientModule({
+    Key? key,
+    required this.ingredientModel,
+    required this.remove,
+    required this.index,
+    required this.add,
+  }) : super(key: key);
 
   final int index;
   final IngredientModel ingredientModel;
   final void Function(int index) remove;
+  final void Function(int index) add;
 
   @override
   State<IngredientModule> createState() => _IngredientModuleState();
@@ -336,11 +366,49 @@ class _IngredientModuleState extends State<IngredientModule> {
     qtyTxt.text = widget.ingredientModel.qty;
   }
 
+  Future<void> saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final qty = qtyTxt.text;
+    final type = typeTxt.text;
+
+    await prefs.setString('qty', qtyTxt.text);
+    await prefs.setString('type', typeTxt.text);
+
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Home(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 20),
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      padding: const EdgeInsets.only(top: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+
+            GestureDetector(
+              onTap: saveData,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Container(
+                    padding: const EdgeInsets.all(15.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                      color: true ? Colors.blueGrey : Colors.grey,
+                    ),
+                    child: const Text(
+                      '+',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                    )),
+              ),
+            ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -402,7 +470,7 @@ class _IngredientModuleState extends State<IngredientModule> {
                 widget.remove(widget.index);
               },
               child: Padding(
-                padding: const EdgeInsets.only(right: 20),
+                padding: const EdgeInsets.only(right: 10),
                 child: Container(
                     padding: const EdgeInsets.all(15.0),
                     decoration: BoxDecoration(
@@ -415,7 +483,9 @@ class _IngredientModuleState extends State<IngredientModule> {
                       style: TextStyle(fontWeight: FontWeight.w600),
                     )),
               ),
-            )
-        ]));
+            ),
+        ],
+      ),
+    );
   }
 }

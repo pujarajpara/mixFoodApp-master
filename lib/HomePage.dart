@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Page/Bottombar.dart';
@@ -106,7 +105,6 @@ class HomePage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    //  ),
                   ),
                 ),
               ],

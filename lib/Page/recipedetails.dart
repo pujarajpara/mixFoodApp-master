@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
-import 'package:mixfoodapp/Page/saveIcon.dart';
+import 'package:mixfoodapp/Page/saverecipe.dart';
 
 import '../Constants/text.dart';
 
@@ -81,7 +81,7 @@ class _recipedeState extends State<recipede> {
                   height: 55,
                   width: 60,
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 1),
+                  padding: const EdgeInsets.only(left: 1),
                   decoration: const BoxDecoration(
                       shape: BoxShape.circle, color: Color(0x4A303030)),
                   child: const Icon(
@@ -229,9 +229,9 @@ class _recipedeState extends State<recipede> {
                               fontWeight: FontWeight.bold)),
                         ),
                       ),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 20),
+                      const Spacer(),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 20),
                         child: Text(
                           "200g",
                           style: (TextStyle(

@@ -66,11 +66,11 @@ class _saveIconState extends State<saveIcon> {
                         width: 150,
                         child: Center(
                           child: Text(
-                            icon[index],
-                            style: (TextStyle(
+                            icon[index].toString(),
+                            style: TextStyle(
                                 color:
                                     index == isSec ? Colors.white : Colors.red,
-                                fontSize: 12)),
+                                fontSize: 12),
                           ),
                         ),
                       ),

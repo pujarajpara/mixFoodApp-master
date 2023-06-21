@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, public_member_api_docs, non_constant_identifier_names, lines_longer_than_80_chars
+
 import 'package:flutter/material.dart';
 
 class ColorsNeutral {

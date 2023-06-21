@@ -1,7 +1,6 @@
-import 'dart:core';
+// ignore_for_file: public_member_api_docs, non_constant_identifier_names
 
-import 'package:flutter/material.dart';
-import 'package:mixfoodapp/Page/notification.dart';
+import 'dart:core';
 
 class Models {
   String freslist;
@@ -15,10 +14,11 @@ class Models {
   String make;
   String burger;
   String recentmake1;
-  // String poppulerpers;
-  // String Poppulername;
-  // String savev1;
+  String poppulerpers;
+  String Poppulername;
+  String savev1;
 
+  // ignore: sort_constructors_first
   Models({
     required this.freslist,
     required this.txt,
@@ -31,9 +31,9 @@ class Models {
     required this.make,
     required this.burger,
     required this.recentmake1,
-    // required this.poppulerpers,
-    // required this.Poppulername,
-    // required this.savev1,
+    required this.poppulerpers,
+    required this.Poppulername,
+    required this.savev1,
   });
 }
 
@@ -50,9 +50,9 @@ List<Models> listmodels = [
     make: 'By Niki Samantha',
     burger: 'Indonesian \nchicken burger',
     recentmake1: 'By Adriannna Curl',
-    // poppulerpers: '',
-    // Poppulername: '',
-    // savev1: '',
+    poppulerpers: '',
+    Poppulername: '',
+    savev1: '',
   ),
   Models(
     freslist: 'Assets/video5.png',
@@ -66,9 +66,9 @@ List<Models> listmodels = [
     make: 'By Troyan Smith',
     burger: 'Home made \ncute pancake,',
     recentmake1: 'By James Wolden',
-    // poppulerpers: '',
-    // Poppulername: '',
-    // savev1: '',
+    poppulerpers: '',
+    Poppulername: '',
+    savev1: '',
   ),
 ];
 List<Models> listmodel2 = [
@@ -84,9 +84,9 @@ List<Models> listmodel2 = [
     make: 'By Troyan Smith',
     burger: 'Indonesian \nchicken burger',
     recentmake1: 'By Adrianna Curl',
-    // poppulerpers: 'Assets/Avatar1.png',
-    // Poppulername: 'Trayan \nSmaith',
-    // savev1: 'Assets/savevide1.png',
+    poppulerpers: 'Assets/Avatar1.png',
+    Poppulername: 'Trayan \nSmaith',
+    savev1: 'Assets/savevide1.png',
   ),
   Models(
     freslist: '',
@@ -100,9 +100,9 @@ List<Models> listmodel2 = [
     make: 'By Troyan Smith',
     burger: 'Home made \ncute pancake',
     recentmake1: 'By James Wolden',
-    // poppulerpers: 'Assets/Avatar2.png',
-    // Poppulername: 'James \nWolden',
-    // savev1: 'Assets/savevideo2.png',
+    poppulerpers: 'Assets/Avatar2.png',
+    Poppulername: 'James \nWolden',
+    savev1: 'Assets/savevideo2.png',
   ),
   Models(
     freslist: '',
@@ -116,9 +116,9 @@ List<Models> listmodel2 = [
     make: 'By Troyan Smith',
     burger: 'How to make \nseafood friend friend',
     recentmake1: 'By Roberta Anny',
-    // poppulerpers: 'Assets/Avatar3.png',
-    // Poppulername: 'Niki \nSamantha',
-    // savev1: '',
+    poppulerpers: 'Assets/Avatar3.png',
+    Poppulername: 'Niki \nSamantha',
+    savev1: '',
   ),
 ];
 
@@ -132,6 +132,7 @@ class Model {
   String unsplash1;
   String devlop;
 
+  // ignore: sort_constructors_first
   Model({
     required this.saverecipe,
     required this.duration,
@@ -144,7 +145,7 @@ class Model {
   });
 }
 
-List<Model> saverec = [
+List<Model> savere = [
   Model(
     saverecipe: 'Assets/videorecipe1.png',
     duration: '15:10',
@@ -172,7 +173,7 @@ List<Model> saverec = [
       text: '4.9',
       saveretitle: ' Easy oatmeal recipe',
       unsplash1: 'Assets/unsplash3.png',
-      devlop: 'By james  Wolden'),
+      devlop: 'By james  Wolden',),
 ];
 
 class Model1 {

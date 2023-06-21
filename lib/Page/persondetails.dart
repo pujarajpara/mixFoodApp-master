@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
@@ -23,9 +22,9 @@ class _personState extends State<person> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 20),
-          child: const Text(
+        title: const Padding(
+          padding: EdgeInsets.only(left: 20, top: 20),
+          child: Text(
             "My profile",
             style: TextStyle(
                 color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600),
@@ -67,37 +66,35 @@ class _personState extends State<person> {
                         )),
                   ]),
             ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Text(
-                          "Alessandra Blair",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 5, top: 10, right: 24),
-                          child: Text(
-                            '''  Hello world I’m Alessandra Blair, I’m 
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text(
+                        "Alessandra Blair",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 5, top: 10, right: 24),
+                        child: Text(
+                          '''  Hello world I’m Alessandra Blair, I’m 
   from Italy 🏳‍🌈 I love cooking so much!  ''',
-                            style: TextStyle(
-                                color: ColorsNeutral.Neutral40, fontSize: 14),
-                          ),
-                        )
-                      ],
-                    ),
+                          style: TextStyle(
+                              color: ColorsNeutral.Neutral40, fontSize: 14),
+                        ),
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
              Padding(
                padding: const EdgeInsets.only(top: 25),
@@ -107,7 +104,7 @@ class _personState extends State<person> {
                   Column(
                     children: [
                       Text("Recipe",style: TextStyle(color: ColorsNeutral.Neutral40,fontSize: 12),),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(top: 10),
                       ),
                       Text("3",style: TextStyle(color: ColorsNeutral.Neutral90,fontWeight: FontWeight.w600,fontSize: 20),)
@@ -178,7 +175,7 @@ class _personState extends State<person> {
                           height: 58,
                           child: Center(
                             child: Text(
-                              mypro1[index],
+                              mypro1[index].toString(),
                               style: (TextStyle(
                                   color: index == isSec
                                       ? Colors.white

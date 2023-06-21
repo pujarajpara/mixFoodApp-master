@@ -38,8 +38,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   Future<void> loadData() async {
     final prefs = await SharedPreferences.getInstance();
-    String? qtyte = prefs.getString('qty');
-    String? typete = prefs.getString('type');
+    var qtyte = prefs.getString('qty');
+    var typete = prefs.getString('type');
     setState(() {
       if(qtyte!=null)texts.add(qtyte);
       if(typete!=null)texts.add(typete);
@@ -342,8 +342,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Align(
-                            alignment: Alignment.center,
-                            child: Text("Salad"),
+                            child: Text('Salad'),
                           ),
                         ),
                       ),
@@ -354,8 +353,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Align(
-                            alignment: Alignment.center,
-                            child: Text("Breakfast"),
+                            child: Text('Breakfast'),
                           ),
                         ),
                       ),
@@ -378,8 +376,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Align(
-                            alignment: Alignment.center,
-                            child: Text("Noodle"),
+                            child: Text('Noodle'),
                           ),
                         ),
                       ),
@@ -409,8 +406,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding:
@@ -435,7 +430,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                               padding: const EdgeInsets.only(
                                                   left: 15, top: 50),
                                               child: Text(
-                                                "10 min",
+                                                '10 min',
                                                 style: TextStyle(
                                                   color:
                                                       ColorsNeutral.Neutral90,
@@ -474,7 +469,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   bottom: 42,
                                   right: 120,
                                   child: Text(
-                                    "Time",
+                                    'Time',
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: ColorsNeutral.Neutral30,
@@ -486,7 +481,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   padding:
                                       const EdgeInsets.only(left: 10, top: 10),
                                   child: Image.asset(
-                                    (salad[index].my1),
+                                    salad[index].my1,
                                     height: 130,
                                     width: 150,
                                   ),
@@ -601,7 +596,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   padding:
                                       const EdgeInsets.only(left: 15, top: 10),
                                   child: Image.asset(
-                                    (salad[index].breafast),
+                                    salad[index].breafast,
                                     height: 130,
                                     width: 150,
                                   ),
@@ -631,8 +626,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding:

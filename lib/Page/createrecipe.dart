@@ -110,7 +110,7 @@ class _createrecipeState extends State<createrecipe> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.asset(
-                      "Assets/createrecipeimage.png",
+                      'Assets/createrecipeimage.png',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -187,11 +187,11 @@ class _createrecipeState extends State<createrecipe> {
               children: [
                 Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Image.asset("Assets/Serves.png")),
+                    child: Image.asset('Assets/Serves.png')),
                 const Padding(
                   padding: EdgeInsets.only(left: 15),
                   child: Text(
-                    "Server",
+                    'Server',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -201,15 +201,15 @@ class _createrecipeState extends State<createrecipe> {
                     right: 10,
                   ),
                   child: Text(
-                    "01",
-                    style: (TextStyle(
-                        fontSize: 14, color: ColorsNeutral.Neutral40)),
+                    '01',
+                    style: TextStyle(
+                        fontSize: 14, color: ColorsNeutral.Neutral40),
                   ),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(right: 20),
                   child: Icon(Icons.arrow_forward),
-                )
+                ),
               ],
             ),
           ),
@@ -222,16 +222,14 @@ class _createrecipeState extends State<createrecipe> {
               color: ColorsNeutral.Neutral20,
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Image.asset("Assets/cooktimeicon.png")),
+                    child: Image.asset('Assets/cooktimeicon.png'),),
                 const Padding(
                   padding: EdgeInsets.only(left: 15),
                   child: Text(
-                    "Cook time",
+                    'Cook time',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -241,9 +239,9 @@ class _createrecipeState extends State<createrecipe> {
                     right: 10,
                   ),
                   child: Text(
-                    "45 min",
-                    style: (TextStyle(
-                        fontSize: 14, color: ColorsNeutral.Neutral40)),
+                    '45 min',
+                    style: TextStyle(
+                        fontSize: 14, color: ColorsNeutral.Neutral40),
                   ),
                 ),
                 const Padding(
@@ -256,7 +254,7 @@ class _createrecipeState extends State<createrecipe> {
           Padding(
             padding: const EdgeInsets.only(left: 20, top: 12),
             child: Text(
-              "Ingredients",
+              'Ingredients',
               style: TextStyle(
                   fontSize: 20,
                   color: ColorsNeutral.Neutral100,
@@ -281,7 +279,7 @@ class _createrecipeState extends State<createrecipe> {
             child: InkWell(
               onTap: addEmptyIngredient,
               child: const Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8),
                 child: Text(
                   '+ Add Ingredient',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
@@ -472,7 +470,7 @@ class _IngredientModuleState extends State<IngredientModule> {
               child: Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: Container(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(10),

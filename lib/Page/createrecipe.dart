@@ -182,8 +182,6 @@ class _createrecipeState extends State<createrecipe> {
               color: ColorsNeutral.Neutral20,
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                     padding: const EdgeInsets.only(left: 10),

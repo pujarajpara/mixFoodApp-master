@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 List<Model> saveVideo = [];
 
+
 void saveVideoCheck(Model saveAllVideos) {
   if (saveVideo.contains(saveAllVideos)) {
     saveVideo.remove(saveAllVideos);
@@ -25,6 +26,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
+  List<String> texts = [];
   String? qty;
   String? type;
 
@@ -39,8 +41,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     String? qtyte = prefs.getString('qty');
     String? typete = prefs.getString('type');
     setState(() {
-      qty = prefs.getString('qtyte');
-      type = prefs.getString('typete');
+      if(qtyte!=null)texts.add(qtyte);
+      if(typete!=null)texts.add(typete);
+      // qty = prefs.getString('qtyte');
+      // type = prefs.getString('typete');
     });
     print(qtyte);
     print(typete);
@@ -272,6 +276,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     fontWeight: FontWeight.w600)),
                           ),
                           const Icon(Icons.more_horiz),
+
 
                         ],
                       ),

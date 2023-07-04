@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Page/Bottombar.dart';
+import 'package:mixfoodapp/Page/home.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -84,7 +85,7 @@ class HomePage extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Bottomtabbar()),
+                              builder: (context) => const Bottomtabbar(),),
                           (route) => false,
                         );
                       },

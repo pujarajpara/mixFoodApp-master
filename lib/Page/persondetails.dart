@@ -176,11 +176,11 @@ class _personState extends State<person> {
                           child: Center(
                             child: Text(
                               mypro1[index].toString(),
-                              style: (TextStyle(
+                              style: TextStyle(
                                   color: index == isSec
                                       ? Colors.white
                                       : Colors.red,
-                                  fontSize: 12)),
+                                  fontSize: 12),
                             ),
                           ),
                         ),

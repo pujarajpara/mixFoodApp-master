@@ -1,25 +1,23 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Page/home.dart';
 import 'package:mixfoodapp/Page/recipedetails.dart';
 
-import 'package:mixfoodapp/Constants/Color.dart';
-import 'package:mixfoodapp/Constants/model.dart';
 
-List savevideo1 = [];
 
 class saveIcon extends StatefulWidget {
   const saveIcon({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<saveIcon> createState() => _saveIconState();
 }
 
 class _saveIconState extends State<saveIcon> {
-  List icon = ["Video", "recipe"];
+  List icon = ['Video', 'recipe'];
   int isSec = 0;
   bool isSave = true;
 
@@ -38,7 +36,7 @@ class _saveIconState extends State<saveIcon> {
           const Padding(
             padding: EdgeInsets.only(left: 20, top: 80, right: 120),
             child: Text(
-              "Saved recipes",
+              'Saved recipes',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
             ),
           ),
@@ -81,7 +79,6 @@ class _saveIconState extends State<saveIcon> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.only(left: 15, top: 25),
-              scrollDirection: Axis.vertical,
               itemCount: saveVideo.length,
               itemBuilder: (_, index) {
                 return Column(
@@ -100,7 +97,7 @@ class _saveIconState extends State<saveIcon> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(8),
                                 child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -139,7 +136,7 @@ class _saveIconState extends State<saveIcon> {
                                               BorderRadius.circular(33),
                                           child: BackdropFilter(
                                             filter: ImageFilter.blur(
-                                                sigmaX: 3.0, sigmaY: 3.0),
+                                                sigmaX: 3, sigmaY: 3),
                                             child: Container(
                                               height: 48,
                                               width: 48,
@@ -155,7 +152,7 @@ class _saveIconState extends State<saveIcon> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              const recipede()));
+                                                              const recipede(),),);
                                                 },
                                                 child: const Icon(
                                                   Icons.play_arrow_rounded,
@@ -190,7 +187,7 @@ class _saveIconState extends State<saveIcon> {
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        "15:10",
+                                                        '15:10',
                                                         style: TextStyle(
                                                             color: ColorsNeutral
                                                                 .Neutral0,
@@ -199,9 +196,9 @@ class _saveIconState extends State<saveIcon> {
                                                     ],
                                                   ),
                                                 ),
-                                              ]))
-                                    ]),
-                              )),
+                                              ],),),
+                                    ],),
+                              ),),
                           Positioned(
                             top: 5,
                             right: 5,
@@ -239,7 +236,7 @@ class _saveIconState extends State<saveIcon> {
                               style: TextStyle(
                                   fontSize: 16,
                                   color: ColorsNeutral.Neutral90,
-                                  fontWeight: FontWeight.w600)),
+                                  fontWeight: FontWeight.w600),),
                           const Icon(Icons.more_horiz),
                         ],
                       ),

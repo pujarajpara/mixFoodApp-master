@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -5,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
 import 'package:mixfoodapp/Page/home.dart';
-import 'package:mixfoodapp/Page/saverecipe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+List<ModelAddSaveRe>list = [];
 
 class IngredientModel {
   String type;
@@ -26,19 +28,6 @@ class _createrecipeState extends State<createrecipe> {
   int isSec = 0;
   List<IngredientModel> ingredient = [IngredientModel(qty: '', type: '')];
 
-  Future<void> saveData(String inputText1, String inputText2) async {
-    var prefs = await SharedPreferences.getInstance();
-    await prefs.setString('text1', qtyTxt.text);
-    await prefs.setString('text2', typeTxt.text);
-
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Home(),
-      ),
-    );
-  }
-
   void addEmptyIngredient() {
     setState(() {
       ingredient.add(IngredientModel(qty: '', type: ''));
@@ -51,11 +40,11 @@ class _createrecipeState extends State<createrecipe> {
     });
   }
 
-  // void addIngredient(int index) {
-  //  setState(() {
-  //    ingredient.add(index);
-  //  });
-  // }
+  void addIngredient(int index) {
+    setState(() {
+      ingredient.add(IngredientModel(qty: qtyTxt.text, type: typeTxt.text));
+    });
+  }
 
   final typeTxt = TextEditingController();
   final qtyTxt = TextEditingController();
@@ -68,8 +57,12 @@ class _createrecipeState extends State<createrecipe> {
         elevation: 0,
         leading: GestureDetector(
           onTap: () async {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const saveIcon()));
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const Home(),
+              ),
+            );
           },
           child: const Icon(
             Icons.arrow_back,
@@ -104,7 +97,7 @@ class _createrecipeState extends State<createrecipe> {
             alignment: Alignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20),
                 child: SizedBox(
                   height: 250,
                   child: ClipRRect(
@@ -119,14 +112,16 @@ class _createrecipeState extends State<createrecipe> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(33),
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+                  filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3.0),
                   child: Container(
                     height: 65,
                     width: 65,
                     alignment: Alignment.center,
                     padding: const EdgeInsets.only(left: 2),
                     decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Color(0x4A303030)),
+                      shape: BoxShape.circle,
+                      color: Color(0x4A303030),
+                    ),
                     child: const Icon(
                       Icons.play_arrow_rounded,
                       color: Colors.white,
@@ -145,11 +140,12 @@ class _createrecipeState extends State<createrecipe> {
                   ),
                   child: Center(
                     child: IconButton(
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.red,
-                        ),
-                        onPressed: () {}),
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {},
+                    ),
                   ),
                 ),
               ),
@@ -184,8 +180,9 @@ class _createrecipeState extends State<createrecipe> {
             child: Row(
               children: [
                 Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Image.asset('Assets/Serves.png')),
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Image.asset('Assets/Serves.png'),
+                ),
                 const Padding(
                   padding: EdgeInsets.only(left: 15),
                   child: Text(
@@ -200,8 +197,8 @@ class _createrecipeState extends State<createrecipe> {
                   ),
                   child: Text(
                     '01',
-                    style: TextStyle(
-                        fontSize: 14, color: ColorsNeutral.Neutral40),
+                    style:
+                        TextStyle(fontSize: 14, color: ColorsNeutral.Neutral40),
                   ),
                 ),
                 const Padding(
@@ -222,8 +219,9 @@ class _createrecipeState extends State<createrecipe> {
             child: Row(
               children: [
                 Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Image.asset('Assets/cooktimeicon.png'),),
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Image.asset('Assets/cooktimeicon.png'),
+                ),
                 const Padding(
                   padding: EdgeInsets.only(left: 15),
                   child: Text(
@@ -238,8 +236,8 @@ class _createrecipeState extends State<createrecipe> {
                   ),
                   child: Text(
                     '45 min',
-                    style: TextStyle(
-                        fontSize: 14, color: ColorsNeutral.Neutral40),
+                    style:
+                        TextStyle(fontSize: 14, color: ColorsNeutral.Neutral40),
                   ),
                 ),
                 const Padding(
@@ -268,8 +266,8 @@ class _createrecipeState extends State<createrecipe> {
                   key: UniqueKey(),
                   ingredientModel: ingredient[index],
                   index: index,
-                  remove: removeIngredient, add: (int index) {},
-                  // add: addIngredient,
+                  remove: removeIngredient,
+                  add: addIngredient,
                 );
               }),
           Padding(
@@ -335,12 +333,12 @@ class _createrecipeState extends State<createrecipe> {
 
 class IngredientModule extends StatefulWidget {
   const IngredientModule({
-    Key? key,
+    super.key,
     required this.ingredientModel,
     required this.remove,
     required this.index,
     required this.add,
-  }) : super(key: key);
+  });
 
   final int index;
   final IngredientModel ingredientModel;
@@ -362,14 +360,37 @@ class _IngredientModuleState extends State<IngredientModule> {
     qtyTxt.text = widget.ingredientModel.qty;
   }
 
-  Future<void> saveData() async {
+  /*Future<void> saveData() async {
     final prefs = await SharedPreferences.getInstance();
     final qty = qtyTxt.text;
     final type = typeTxt.text;
+    // await prefs.setString('qty', qtyTxt.text);
+    // await prefs.setString('type', typeTxt.text);
+    // print(qtyTxt);
+    // print(typeTxt);
 
-    await prefs.setString('qty', qtyTxt.text);
-    await prefs.setString('type', typeTxt.text);
 
+
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Home(),
+      ),
+    );
+  }*/
+
+  Future<void> saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final addRec =
+        ModelAddSaveRe(saveretitle: qtyTxt.text, devlop: typeTxt.text);
+
+    setState(() {
+      list.add(addRec);
+    });
+
+    await prefs.setString('listA', jsonEncode(list));
 
     await Navigator.push(
       context,
@@ -386,77 +407,85 @@ class _IngredientModuleState extends State<IngredientModule> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-
-            GestureDetector(
-              onTap: saveData,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Container(
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(10),
-                      color: true ? Colors.blueGrey : Colors.grey,
-                    ),
-                    child: const Text(
-                      '+',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-                    )),
+          GestureDetector(
+            onTap: () async => saveData(),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(10),
+                  color: true ? Colors.blueGrey : Colors.grey,
+                ),
+                child: const Text(
+                  '+',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                ),
               ),
             ),
+          ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
                 left: 20,
               ),
               child: TextFormField(
-                  controller: typeTxt,
-                  onChanged: (value) {
-                    setState(() {
-                      widget.ingredientModel.type = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      label: Text(
-                        'part 1',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: ColorsNeutral.Neutral90),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: Colors.red)))),
+                controller: qtyTxt,
+                maxLines: 1,
+                onChanged: (value) {
+                  setState(() {
+                    widget.ingredientModel.qty = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  label: Text(
+                    'part 1',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: ColorsNeutral.Neutral90),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: Colors.red),
+                  ),
+                ),
+              ),
             ),
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 40),
               child: TextFormField(
-                  controller: qtyTxt,
-                  onChanged: (value) {
-                    setState(() {
-                      widget.ingredientModel.qty = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      label: Text(
-                        'text 2',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: ColorsNeutral.Neutral90),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: Colors.red)))),
+                controller: typeTxt,
+                maxLines: 1,
+                onChanged: (value) {
+                  setState(() {
+                    widget.ingredientModel.type = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  label: Text(
+                    'part 2',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: ColorsNeutral.Neutral90,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: Colors.red),
+                  ),
+                ),
+              ),
             ),
           ),
           if (widget.ingredientModel.qty.isNotEmpty ||
@@ -468,16 +497,17 @@ class _IngredientModuleState extends State<IngredientModule> {
               child: Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(10),
-                      color: true ? Colors.blueGrey : Colors.grey,
-                    ),
-                    child: const Text(
-                      '-',
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    )),
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                    color: true ? Colors.blueGrey : Colors.grey,
+                  ),
+                  child: const Text(
+                    '-',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
               ),
             ),
         ],
@@ -485,3 +515,6 @@ class _IngredientModuleState extends State<IngredientModule> {
     );
   }
 }
+
+
+

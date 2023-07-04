@@ -1,6 +1,7 @@
-// ignore_for_file: public_member_api_docs, non_constant_identifier_names
 
+import 'dart:convert';
 import 'dart:core';
+
 
 class Models {
   String freslist;
@@ -18,7 +19,6 @@ class Models {
   String Poppulername;
   String savev1;
 
-  // ignore: sort_constructors_first
   Models({
     required this.freslist,
     required this.txt,
@@ -132,7 +132,6 @@ class Model {
   String unsplash1;
   String devlop;
 
-  // ignore: sort_constructors_first
   Model({
     required this.saverecipe,
     required this.duration,
@@ -166,24 +165,24 @@ List<Model> savere = [
       unsplash1: 'Assets/unsplash2.png',
       devlop: 'By Niki Samaratha'),
   Model(
-      saverecipe: 'Assets/videorecipe3.png',
-      bookmark: 'Assets/Bookmark.png',
-      duration: '15:10',
-      playbutton: 'Assets/Playbutton1.png',
-      text: '4.9',
-      saveretitle: ' Easy oatmeal recipe',
-      unsplash1: 'Assets/unsplash3.png',
-      devlop: 'By james  Wolden',),
+    saverecipe: 'Assets/videorecipe3.png',
+    bookmark: 'Assets/Bookmark.png',
+    duration: '15:10',
+    playbutton: 'Assets/Playbutton1.png',
+    text: '4.9',
+    saveretitle: ' Easy oatmeal recipe',
+    unsplash1: 'Assets/unsplash3.png',
+    devlop: 'By james  Wolden',
+  ),
 ];
 
 class Model1 {
-  String ingredients;
-  String ingredientsname;
-
   Model1({
     required this.ingredients,
     required this.ingredientsname,
   });
+  String ingredients;
+  String ingredientsname;
 }
 
 List<Model1> recipedetails = [
@@ -195,15 +194,14 @@ List<Model1> recipedetails = [
 ];
 
 class Model2 {
-  String my1;
-  String recipename;
-  String rating;
-
   Model2({
     required this.my1,
     required this.recipename,
     required this.rating,
   });
+  String my1;
+  String recipename;
+  String rating;
 }
 
 List<Model2> myprofileinf = [
@@ -224,13 +222,6 @@ List<Model2> myprofileinf = [
 ];
 
 class Model3 {
-  String my1;
-  String time;
-  String saladname;
-  String breafast;
-  String appetizer;
-  String noodles;
-
   Model3({
     required this.my1,
     required this.time,
@@ -239,6 +230,12 @@ class Model3 {
     required this.appetizer,
     required this.noodles,
   });
+  String my1;
+  String time;
+  String saladname;
+  String breafast;
+  String appetizer;
+  String noodles;
 }
 
 List<Model3> salad = [
@@ -266,3 +263,22 @@ List<Model3> salad = [
     noodles: 'Assets/noodles1.png',
   )
 ];
+
+class ModelAddSaveRe {
+  ModelAddSaveRe({
+   required this.saveretitle,
+   required this.devlop,
+  });
+
+  factory ModelAddSaveRe.fromJson(Map<String, dynamic> json) => ModelAddSaveRe(
+        saveretitle: json['savTitle'] as String,
+        devlop: json['devlop'] as String,
+      );
+  String saveretitle;
+  String devlop;
+
+  Map<String, dynamic> toJson() => {
+        'savTitle': saveretitle,
+        'devlop': devlop,
+      };
+}

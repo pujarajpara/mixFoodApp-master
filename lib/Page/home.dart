@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'package:mixfoodapp/Constants/text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<Model> saveVideo = [];
-
 
 void saveVideoCheck(Model saveAllVideos) {
   if (saveVideo.contains(saveAllVideos)) {
@@ -27,31 +27,63 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   List<String> texts = [];
-  String? qty;
-  String? type;
 
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  Future<void> loadData() async {
-    final prefs = await SharedPreferences.getInstance();
-    var qtyte = prefs.getString('qty');
-    var typete = prefs.getString('type');
+  void addText(String newText) {
     setState(() {
-      if(qtyte!=null)texts.add(qtyte);
-      if(typete!=null)texts.add(typete);
-      // qty = prefs.getString('qtyte');
-      // type = prefs.getString('typete');
+      texts.add(newText);
     });
-    print(qtyte);
-    print(typete);
   }
+
+  // Future<List<String>>loadData()async{
+  //   final share=await SharedPreferences. getInstance();
+  //   final listB=share.getKeys();
+  //   final data1=<String>[];
+  //   for(final listA in listB){
+  //     final jsonData=share.getString(listA);
+  //     if( jsonData!=null){
+  //       final decodeData=jsonDecode(jsonData);
+  //       if(decodeData is List<dynamic>){
+  //         for(final item in decodeData){
+  //           if(item is String){
+  //             data1.add(item);
+  //           }
+  //         }
+  //       }
+  //
+  //     }
+  //   }
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   loadData();
+  // }
+  // Future<void> loadData() async {
+  //   final shared = await SharedPreferences.getInstance();
+  //
+  //   final string = shared.getString('listA') ?? '';
+  //
+  //   print(string);
+  //   final   listA = jsonDecode(string) as List;
+  //
+  //   // List<ModelAddSaveRe> listB = listA.map((e) =>
+  //   // ModelAddSaveRe.fromJson(e)).toList();
+  // }
+
+  // final prefs = await SharedPreferences.getInstance();
+    // final qtyte = prefs.getString('qty');
+    // final typete = prefs.getString('type');
+    // setState(() {
+    //   if (qtyte != null) texts.add(qtyte);
+    //   if (typete != null) texts.add(typete);
+    // });
+    // print(qtyte);
+    // print(typete);
+ // }
 
   int isSec = 0;
-  List category = [
+  List<String> category = [
     'Salad',
     'Breakfast',
     'Appetizer',
@@ -59,8 +91,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   ];
   bool save = false;
   int issave = 0;
-  final PageStorageBucket bucket = PageStorageBucket();
 
+  final PageStorageBucket bucket = PageStorageBucket();
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +101,26 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 20, top: 80, right: 120),
-              child: Text(
-                'Find best recipes \nfor Cooking',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
+              child: GestureDetector(
+                onTap: () async {
+                  final shared = await SharedPreferences.getInstance();
+
+                  final string = shared.getString('listA') ?? '';
+
+                  print(string);
+                       final   listA = jsonDecode(string) as List;
+
+                      // List<ModelAddSaveRe> listB = listA.map((e) =>
+                      // ModelAddSaveRe.fromJson(e)).toList();
+                },
+                child: const Text(
+                  'Find best recipes \nfor Cooking',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
@@ -83,44 +128,48 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
               child: TextField(
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    hintText: 'Search recipes',
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      size: 25,
-                    )),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  hintText: 'Search recipes',
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    size: 25,
+                  ),
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 30),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Tranding now 🔥',
-                      style: CustomTextStyle.poppinsBoldh5,
-                    ),
-                    Row(
-                      children: const [
-                        Icon(
-                          Icons.arrow_forward,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Tranding now 🔥',
+                    style: CustomTextStyle.poppinsBoldh5,
+                  ),
+                  Row(
+                    children: const [
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.red,
+                        size: 20,
+                      ),
+                      Text(
+                        'See all',
+                        style: TextStyle(
+                          fontSize: 15,
                           color: Colors.red,
-                          size: 20,
+                          fontWeight: FontWeight.w600,
                         ),
-                        Text(
-                          "See all",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.red,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                  ]),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             SizedBox(
-              height: 290,
+              height: 300,
               width: double.infinity,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -131,170 +180,175 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   final data = savere[index];
                   return Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 20,
-                        ),
-                        child: Stack(
-                          children: [
-                            Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      savere[index].saverecipe,
+                      Stack(
+                        children: [
+                          Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    savere[index].saverecipe,
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 30,
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black38,
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: 30,
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                        color: Colors.black38,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.star_rate_rounded,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.star_rate_rounded,
+                                          color: ColorsNeutral.Neutral0,
+                                          size: 18,
+                                        ),
+                                        Text(
+                                          savere[index].text,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
                                             color: ColorsNeutral.Neutral0,
-                                            size: 18,
-                                          ),
-                                          Text(
-                                            myprofileinf[index].rating,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                color: ColorsNeutral.Neutral0),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 80, top: 60),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(33),
-                                        child: BackdropFilter(
-                                          filter: ImageFilter.blur(
-                                              sigmaX: 3.0, sigmaY: 3.0),
-                                          child: Container(
-                                            height: 48,
-                                            width: 48,
-                                            alignment: Alignment.center,
-                                            padding:
-                                                const EdgeInsets.only(left: 2),
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color(0x4A303030),
-                                            ),
-                                            child: const Icon(
-                                              Icons.play_arrow_rounded,
-                                              color: Colors.white,
-                                              size: 30,
-                                            ),
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 120, top: 150),
-                                      child: ClipRRect(
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 80,
+                                      top: 60,
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(33),
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 3,
+                                          sigmaY: 3,
+                                        ),
                                         child: Container(
-                                            height: 30,
-                                            width: 42,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: const Color(0x4A303030)),
-                                            child: const Center(
-                                              child: Text(
-                                                '15:10',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            )),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 5,
-                              right: 5,
-                              child: Container(
-                                height: 32,
-                                width: 32,
-                                decoration: BoxDecoration(
-                                  color: ColorsNeutral.Neutral0,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      final data = savere[index];
-                                      saveVideoCheck(data);
-                                    });
-                                  },
-                                  child: saveVideo.contains(data)
-                                      ? const Icon(
-                                          Icons.bookmark,
-                                          size: 18,
-                                          color: Colors.red,
-                                        )
-                                      : const Icon(
-                                          Icons.bookmark_add_outlined,
-                                          size: 18,
-                                          color: Colors.black,
+                                          height: 48,
+                                          width: 48,
+                                          alignment: Alignment.center,
+                                          padding:
+                                              const EdgeInsets.only(left: 2),
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Color(0x4A303030),
+                                          ),
+                                          child: const Icon(
+                                            Icons.play_arrow_rounded,
+                                            color: Colors.white,
+                                            size: 30,
+                                          ),
                                         ),
-                                ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 120,
+                                      top: 150,
+                                    ),
+                                    child: ClipRRect(
+                                      child: Container(
+                                        height: 30,
+                                        width: 42,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: const Color(0x4A303030),
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            '15:10',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                          Positioned(
+                            top: 5,
+                            right: 5,
+                            child: Container(
+                              height: 32,
+                              width: 32,
+                              decoration: BoxDecoration(
+                                color: ColorsNeutral.Neutral0,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    final data = savere[index];
+                                    saveVideoCheck(data);
+                                  });
+                                },
+                                child: saveVideo.contains(data)
+                                    ? const Icon(
+                                        Icons.bookmark,
+                                        size: 18,
+                                        color: Colors.red,
+                                      )
+                                    : const Icon(
+                                        Icons.bookmark_add_outlined,
+                                        size: 18,
+                                        color: Colors.black,
+                                      ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              right: 150,
-                            ),
-                            child: Text(savere[index].saveretitle,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: ColorsNeutral.Neutral90,
-                                    fontWeight: FontWeight.w600)),
+
+                          // Text(
+                          //   savere[index].saveretitle,
+                          //   //texts[index],
+                          //   style: TextStyle(
+                          //     fontSize: 16,
+                          //     color: ColorsNeutral.Neutral90,
+                          //     fontWeight: FontWeight.w600,
+                          //   ),
+                          // ),
+                          const SizedBox(
+                            width: 160,
                           ),
                           const Icon(Icons.more_horiz),
-
-
                         ],
-                      ),
-                      const SizedBox(
-                        height: 5,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                          right: 210,
+                          right: 230,
                         ),
-                        child: Row(
-                          children: [
-                            Image.asset(savere[index].unsplash1),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(savere[index].devlop)
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              Image.asset(savere[index].unsplash1),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(savere[index].devlop),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -310,7 +364,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         Text(
-                          "Popular category",
+                          'Popular category',
                           style: CustomTextStyle.poppinsBoldh5,
                         )
                       ],
@@ -321,13 +375,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             ),
             DefaultTabController(
               length: 4,
-              initialIndex: 0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   TabBar(
                     padding: const EdgeInsets.only(
-                        top: 10, bottom: 10, left: 15, right: 15),
+                      top: 10,
+                      bottom: 10,
+                      left: 15,
+                      right: 15,
+                    ),
                     unselectedLabelColor: Colors.black,
                     // unselectedLabelStyle: Colors.black,
                     indicator: BoxDecoration(
@@ -364,8 +421,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Align(
-                            alignment: Alignment.center,
-                            child: Text("Appetizer"),
+                            child: Text('Appetizer'),
                           ),
                         ),
                       ),
@@ -383,8 +439,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     ],
                   ),
                   SizedBox(
-                      height: 260, //height of TabBarView
-                      child: TabBarView(children: [
+                    height: 260, //height of TabBarView
+                    child: TabBarView(
+                      children: [
                         ListView.separated(
                           padding: const EdgeInsets.only(left: 10),
                           scrollDirection: Axis.horizontal,
@@ -398,7 +455,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   padding: const EdgeInsets.only(top: 60),
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
-                                        horizontal: 10),
+                                      horizontal: 10,
+                                    ),
                                     height: 190,
                                     width: 150,
                                     decoration: BoxDecoration(
@@ -417,9 +475,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                             softWrap: false,
                                             maxLines: 2,
                                             style: TextStyle(
-                                                fontSize: 14,
-                                                color: ColorsNeutral.Neutral90,
-                                                fontWeight: FontWeight.w600),
+                                              fontSize: 14,
+                                              color: ColorsNeutral.Neutral90,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
                                         ),
                                         Row(
@@ -428,7 +487,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                           children: [
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 15, top: 50),
+                                                left: 15,
+                                                top: 50,
+                                              ),
                                               child: Text(
                                                 '10 min',
                                                 style: TextStyle(
@@ -471,9 +532,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   child: Text(
                                     'Time',
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        color: ColorsNeutral.Neutral30,
-                                        fontWeight: FontWeight.w400),
+                                      fontSize: 12,
+                                      color: ColorsNeutral.Neutral30,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -503,7 +565,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   padding: const EdgeInsets.only(top: 60),
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
-                                        horizontal: 10),
+                                      horizontal: 10,
+                                    ),
                                     height: 190,
                                     width: 150,
                                     decoration: BoxDecoration(
@@ -513,8 +576,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding:
@@ -526,9 +587,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                             softWrap: false,
                                             maxLines: 2,
                                             style: TextStyle(
-                                                fontSize: 14,
-                                                color: ColorsNeutral.Neutral90,
-                                                fontWeight: FontWeight.w600),
+                                              fontSize: 14,
+                                              color: ColorsNeutral.Neutral90,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
                                         ),
                                         Row(
@@ -539,13 +601,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                               padding: const EdgeInsets.only(
                                                   left: 15, top: 50),
                                               child: Text(
-                                                "10 min",
-                                                style: (TextStyle(
+                                                '10 min',
+                                                style: TextStyle(
                                                   color:
                                                       ColorsNeutral.Neutral90,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w600,
-                                                )),
+                                                ),
                                               ),
                                             ),
                                             Padding(
@@ -584,7 +646,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   bottom: 42,
                                   right: 120,
                                   child: Text(
-                                    "Time",
+                                    'Time',
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: ColorsNeutral.Neutral30,
@@ -650,7 +712,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                               padding: const EdgeInsets.only(
                                                   left: 15, top: 50),
                                               child: Text(
-                                                "10 min",
+                                                '10 min',
                                                 style: TextStyle(
                                                   color:
                                                       ColorsNeutral.Neutral90,
@@ -821,7 +883,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             );
                           },
                         ),
-                      ])),
+                      ],
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 30),
                     child: Row(
@@ -836,7 +900,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           ),
                           Row(
                             children: const [
-                              Text("See all",
+                              Text('See all',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.red,
@@ -859,7 +923,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           itemCount: listmodel2.length,
                           itemBuilder: (context, index) {
                             return Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8),
@@ -911,7 +974,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           Row(
                             children: const [
                               Text(
-                                "See all",
+                                'See all',
                                 style:
                                     TextStyle(fontSize: 15, color: Colors.red),
                               ),
@@ -936,7 +999,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           itemCount: listmodel2.length,
                           itemBuilder: (context, index) {
                             return Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(10),

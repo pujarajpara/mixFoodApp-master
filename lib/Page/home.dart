@@ -6,9 +6,11 @@ import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
 
 import 'package:mixfoodapp/Constants/text.dart';
+import 'package:mixfoodapp/Page/notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<Model> saveVideo = [];
+
 
 void saveVideoCheck(Model saveAllVideos) {
   if (saveVideo.contains(saveAllVideos)) {
@@ -26,6 +28,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
+  List<ModelAddSaveRe> cardItem = [
+    ModelAddSaveRe(saveretitle: 'saveretitle1', devlop: 'devlop1')
+  ];
   List<String> texts = [];
 
   void addText(String newText) {
@@ -33,27 +38,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       texts.add(newText);
     });
   }
-
-  // Future<List<String>>loadData()async{
-  //   final share=await SharedPreferences. getInstance();
-  //   final listB=share.getKeys();
-  //   final data1=<String>[];
-  //   for(final listA in listB){
-  //     final jsonData=share.getString(listA);
-  //     if( jsonData!=null){
-  //       final decodeData=jsonDecode(jsonData);
-  //       if(decodeData is List<dynamic>){
-  //         for(final item in decodeData){
-  //           if(item is String){
-  //             data1.add(item);
-  //           }
-  //         }
-  //       }
-  //
-  //     }
-  //   }
-  // }
-
   // @override
   // void initState() {
   //   super.initState();
@@ -63,24 +47,24 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   //   final shared = await SharedPreferences.getInstance();
   //
   //   final string = shared.getString('listA') ?? '';
-  //
   //   print(string);
-  //   final   listA = jsonDecode(string) as List;
+  //   final listB=todos.map((e)=>e.toJson()).toList();
+  //  // List<ModelAddSaveRe>list=
   //
   //   // List<ModelAddSaveRe> listB = listA.map((e) =>
   //   // ModelAddSaveRe.fromJson(e)).toList();
   // }
 
   // final prefs = await SharedPreferences.getInstance();
-    // final qtyte = prefs.getString('qty');
-    // final typete = prefs.getString('type');
-    // setState(() {
-    //   if (qtyte != null) texts.add(qtyte);
-    //   if (typete != null) texts.add(typete);
-    // });
-    // print(qtyte);
-    // print(typete);
- // }
+  // final qtyte = prefs.getString('qty');
+  // final typete = prefs.getString('type');
+  // setState(() {
+  //   if (qtyte != null) texts.add(qtyte);
+  //   if (typete != null) texts.add(typete);
+  // });
+  // print(qtyte);
+  // print(typete);
+  // }
 
   int isSec = 0;
   List<String> category = [
@@ -102,18 +86,24 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 20, top: 80, right: 120),
+              padding: const EdgeInsets.only(left: 20, top: 80, right: 120),
               child: GestureDetector(
                 onTap: () async {
                   final shared = await SharedPreferences.getInstance();
-
                   final string = shared.getString('listA') ?? '';
+                   print(string);
+                   final list2=jsonDecode(string)as List;
+                   print(list2);
+                   // final   listA = jsonDecode(string) as List;
+                   //  final items=listA.map((e) => e.toJson()).toList();
+                   //  await shared.setString('listA', jsonEncode(items));
+                   //  print(items);
 
-                  print(string);
-                       final   listA = jsonDecode(string) as List;
 
-                      // List<ModelAddSaveRe> listB = listA.map((e) =>
-                      // ModelAddSaveRe.fromJson(e)).toList();
+
+
+                  // // List<ModelAddSaveRe> listB = listA.map((e) =>
+                  // // ModelAddSaveRe.fromJson(e)).toList();
                 },
                 child: const Text(
                   'Find best recipes \nfor Cooking',
@@ -318,16 +308,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       ),
                       Row(
                         children: [
-
-                          // Text(
-                          //   savere[index].saveretitle,
-                          //   //texts[index],
-                          //   style: TextStyle(
-                          //     fontSize: 16,
-                          //     color: ColorsNeutral.Neutral90,
-                          //     fontWeight: FontWeight.w600,
-                          //   ),
-                          // ),
+                          Text(
+                            savere[index].saveretitle,
+                            //texts[index],
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: ColorsNeutral.Neutral90,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                           const SizedBox(
                             width: 160,
                           ),
@@ -1029,3 +1018,33 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+// Future<List<ModelAddSaveRe>>loadData()async{
+//   final share=await SharedPreferences. getInstance();
+//   final listB=share.getKeys();
+//   final data1=<String>[];
+//   for(final listA in listB){
+//     final jsonData=share.getString(listA);
+//     if( jsonData!=null){
+//       final decodeData=jsonDecode(jsonData);
+//       if(decodeData is List<dynamic>){
+//         for(final item in decodeData){
+//           if(item is String){
+//             data1.add(item);
+//           }
+//         }
+//       }
+//      return data1;
+//     }
+//   }
+// }

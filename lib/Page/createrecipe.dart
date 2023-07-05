@@ -8,7 +8,7 @@ import 'package:mixfoodapp/Constants/model.dart';
 import 'package:mixfoodapp/Page/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-List<ModelAddSaveRe>list = [];
+List<ModelAddSaveRe> list = [];
 
 class IngredientModel {
   String type;
@@ -267,7 +267,6 @@ class _createrecipeState extends State<createrecipe> {
                   ingredientModel: ingredient[index],
                   index: index,
                   remove: removeIngredient,
-                  add: addIngredient,
                 );
               }),
           Padding(
@@ -337,13 +336,11 @@ class IngredientModule extends StatefulWidget {
     required this.ingredientModel,
     required this.remove,
     required this.index,
-    required this.add,
   });
 
   final int index;
   final IngredientModel ingredientModel;
   final void Function(int index) remove;
-  final void Function(int index) add;
 
   @override
   State<IngredientModule> createState() => _IngredientModuleState();
@@ -368,10 +365,6 @@ class _IngredientModuleState extends State<IngredientModule> {
     // await prefs.setString('type', typeTxt.text);
     // print(qtyTxt);
     // print(typeTxt);
-
-
-
-
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -382,16 +375,12 @@ class _IngredientModuleState extends State<IngredientModule> {
 
   Future<void> saveData() async {
     final prefs = await SharedPreferences.getInstance();
-
     final addRec =
         ModelAddSaveRe(saveretitle: qtyTxt.text, devlop: typeTxt.text);
-
     setState(() {
       list.add(addRec);
     });
-
     await prefs.setString('listA', jsonEncode(list));
-
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -400,6 +389,8 @@ class _IngredientModuleState extends State<IngredientModule> {
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -407,10 +398,10 @@ class _IngredientModuleState extends State<IngredientModule> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          GestureDetector(
-            onTap: () async => saveData(),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: InkWell(
+              onTap:saveData,
               child: Container(
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
@@ -515,6 +506,3 @@ class _IngredientModuleState extends State<IngredientModule> {
     );
   }
 }
-
-
-

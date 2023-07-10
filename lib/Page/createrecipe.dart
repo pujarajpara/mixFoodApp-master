@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
+import 'package:mixfoodapp/Constants/text.dart';
 import 'package:mixfoodapp/Page/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<ModelAddSaveRe> list = [];
+final List<ModelAddSaveRe> itemList = [];
+
 
 class IngredientModel {
   String type;
@@ -40,14 +43,7 @@ class _createrecipeState extends State<createrecipe> {
     });
   }
 
-  void addIngredient(int index) {
-    setState(() {
-      ingredient.add(IngredientModel(qty: qtyTxt.text, type: typeTxt.text));
-    });
-  }
 
-  final typeTxt = TextEditingController();
-  final qtyTxt = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -350,13 +346,15 @@ class _IngredientModuleState extends State<IngredientModule> {
   final typeTxt = TextEditingController();
   final qtyTxt = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    typeTxt.text = widget.ingredientModel.type;
-    qtyTxt.text = widget.ingredientModel.qty;
-  }
 
+
+
+  @override
+  // void initState() {
+  //   super.initState();
+  //   typeTxt.text = widget.ingredientModel.type;
+  //   qtyTxt.text = widget.ingredientModel.qty;
+  // }
   /*Future<void> saveData() async {
     final prefs = await SharedPreferences.getInstance();
     final qty = qtyTxt.text;
@@ -372,7 +370,6 @@ class _IngredientModuleState extends State<IngredientModule> {
       ),
     );
   }*/
-
   Future<void> saveData() async {
     final prefs = await SharedPreferences.getInstance();
     final addRec =
@@ -381,16 +378,13 @@ class _IngredientModuleState extends State<IngredientModule> {
       list.add(addRec);
     });
     await prefs.setString('listA', jsonEncode(list));
-    await Navigator.push(
+     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Home(),
+        builder: (context) => const Home(),
       ),
     );
   }
-
-
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -401,7 +395,8 @@ class _IngredientModuleState extends State<IngredientModule> {
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: InkWell(
-              onTap:saveData,
+             onTap:
+              saveData,
               child: Container(
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
@@ -479,11 +474,13 @@ class _IngredientModuleState extends State<IngredientModule> {
               ),
             ),
           ),
-          if (widget.ingredientModel.qty.isNotEmpty ||
-              widget.ingredientModel.type.isNotEmpty)
+          // if (widget.ingredientModel.qty.isNotEmpty ||
+          //     widget.ingredientModel.type.isNotEmpty)
             InkWell(
               onTap: () {
-                widget.remove(widget.index);
+                setState(() {
+                  widget.remove(widget.index);
+                });
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 10),
@@ -504,5 +501,183 @@ class _IngredientModuleState extends State<IngredientModule> {
         ],
       ),
     );
-  }
+   }
+  // void delete() async {
+  //   List<ModelAddSaveRe> loadedItemList =  loadData();
+  //   setState(() {
+  //     itemList..clear()
+  //     ..addAll(loadedItemList);
+  //   });
+  // }
+
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'dart:convert';
+//
+// void main() {
+//   runApp(MyApp());
+// }
+//
+// class Item {
+//   final String name;
+//
+//   Item(this.name);
+//
+//   Map<String, dynamic> toJson() {
+//     return {
+//       'name': name,
+//     };
+//   }
+//0
+//   factory Item.fromJson(Map<String, dynamic> json) {
+//     return Item(json['name']);
+//   }
+// }
+//
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: FirstScreen(),
+//       routes: {
+//         '/second': (context) => SecondScreen(),
+//       },
+//     );
+//   }
+// }
+//
+// class FirstScreen extends StatefulWidget {
+//   @override
+//   _FirstScreenState createState() => _FirstScreenState();
+// }
+//
+// class _FirstScreenState extends State<FirstScreen> {
+//   final List<Item> itemList = [
+//     Item('Item 1'),
+//     Item('Item 2'),
+//     Item('Item 3'),
+//   ];
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _loadData();
+//   }
+//
+//   void _loadData() async {
+//     List<Item> loadedItemList = await loadData();
+//     setState(() {
+//       itemList.clear();
+//       itemList.addAll(loadedItemList);
+//     });
+//   }
+//
+//   void _deleteItem(int index) {
+//     setState(() {
+//       itemList.removeAt(index);
+//       _saveData();
+//     });
+//   }
+//
+//   void _saveData() async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     List<String> encodedDataList =
+//     itemList.map((item) => json.encode(item.toJson())).toList();
+//     await prefs.setStringList('itemList', encodedDataList);
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('First Screen'),
+//       ),
+//       body: ListView.builder(
+//         itemCount: itemList.length,
+//         itemBuilder: (context, index) {
+//           return ListTile(
+//             title: Text(itemList[index].name),
+//             trailing: IconButton(
+//               icon: Icon(Icons.delete),
+//               onPressed: () {
+//                 _deleteItem(index);
+//               },
+//             ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+//
+// class SecondScreen extends StatefulWidget {
+//   @override
+//   _SecondScreenState createState() => _SecondScreenState();
+// }
+//
+// class _SecondScreenState extends State<SecondScreen> {
+//   List<Item> itemList = [];
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _loadData();
+//   }
+//
+//   void _loadData() async {
+//     List<Item> loadedItemList = await loadData();
+//     setState(() {
+//       itemList.clear();
+//       itemList.addAll(loadedItemList);
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Second Screen'),
+//       ),
+//       body: ListView.builder(
+//         itemCount: itemList.length,
+//         itemBuilder: (context, index) {
+//           return ListTile(
+//             title: Text(itemList[index].name),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+//
+// Future<void> saveData(List<Item> itemList) async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   List<String> encodedDataList =
+//   itemList.map((item) => json.encode(item.toJson())).toList();
+//   await prefs.setStringList('itemList', encodedDataList);
+// }
+//
+// Future<List<Item>> loadData() async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   List<String>? encodedDataList = prefs.getStringList('itemList');
+//   if (encodedDataList != null) {
+//     List<Item> loadedItemList = encodedDataList
+//         .map((encodedItem) => Item.fromJson(json.decode(encodedItem)))
+//         .toList();
+//     return
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,8 +10,6 @@ import 'package:mixfoodapp/Page/notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<Model> saveVideo = [];
-
-
 void saveVideoCheck(Model saveAllVideos) {
   if (saveVideo.contains(saveAllVideos)) {
     saveVideo.remove(saveAllVideos);
@@ -28,32 +26,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
-  List<ModelAddSaveRe> cardItem = [
-    ModelAddSaveRe(saveretitle: 'saveretitle1', devlop: 'devlop1')
-  ];
-  List<String> texts = [];
 
-  void addText(String newText) {
-    setState(() {
-      texts.add(newText);
-    });
+  @override
+  void initState() {
+    super.initState();
+    loadData();
   }
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   loadData();
-  // }
-  // Future<void> loadData() async {
-  //   final shared = await SharedPreferences.getInstance();
-  //
-  //   final string = shared.getString('listA') ?? '';
-  //   print(string);
-  //   final listB=todos.map((e)=>e.toJson()).toList();
-  //  // List<ModelAddSaveRe>list=
-  //
-  //   // List<ModelAddSaveRe> listB = listA.map((e) =>
-  //   // ModelAddSaveRe.fromJson(e)).toList();
-  // }
+  Future<void> loadData() async {
+    final shared = await SharedPreferences.getInstance();
+
+    final string = shared.getString('listA') ?? '';
+    final listA = jsonDecode(string) as List;
+    final items = listA.map((e) => e.toJson().toList());
+    await shared.setString('listA', jsonEncode(items));
+    print(items);
+  }
 
   // final prefs = await SharedPreferences.getInstance();
   // final qtyte = prefs.getString('qty');
@@ -85,32 +72,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 80, right: 120),
-              child: GestureDetector(
-                onTap: () async {
-                  final shared = await SharedPreferences.getInstance();
-                  final string = shared.getString('listA') ?? '';
-                   print(string);
-                   final list2=jsonDecode(string)as List;
-                   print(list2);
-                   // final   listA = jsonDecode(string) as List;
-                   //  final items=listA.map((e) => e.toJson()).toList();
-                   //  await shared.setString('listA', jsonEncode(items));
-                   //  print(items);
-
-
-
-
-                  // // List<ModelAddSaveRe> listB = listA.map((e) =>
-                  // // ModelAddSaveRe.fromJson(e)).toList();
-                },
-                child: const Text(
-                  'Find best recipes \nfor Cooking',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                  ),
+            const Padding(
+              padding: EdgeInsets.only(left: 20, top: 80, right: 120),
+              child: Text(
+                'Find best recipes \nfor Cooking',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -168,7 +136,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 itemCount: savere.length,
                 itemBuilder: (_, index) {
                   final data = savere[index];
-                  return Column(
+                   return Column(
                     children: [
                       Stack(
                         children: [
@@ -491,7 +459,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  right: 10, top: 40),
+                                                  right: 10, top: 40,),
                                               child: Container(
                                                 height: 24,
                                                 width: 24,
@@ -639,7 +607,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: ColorsNeutral.Neutral30,
-                                        fontWeight: FontWeight.w400),
+                                        fontWeight: FontWeight.w400,),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -1020,31 +988,3 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 }
 
 
-
-
-
-
-
-
-
-
-
-// Future<List<ModelAddSaveRe>>loadData()async{
-//   final share=await SharedPreferences. getInstance();
-//   final listB=share.getKeys();
-//   final data1=<String>[];
-//   for(final listA in listB){
-//     final jsonData=share.getString(listA);
-//     if( jsonData!=null){
-//       final decodeData=jsonDecode(jsonData);
-//       if(decodeData is List<dynamic>){
-//         for(final item in decodeData){
-//           if(item is String){
-//             data1.add(item);
-//           }
-//         }
-//       }
-//      return data1;
-//     }
-//   }
-// }

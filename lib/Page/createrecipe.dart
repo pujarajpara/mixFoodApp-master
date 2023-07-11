@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 List<ModelAddSaveRe> list = [];
 final List<ModelAddSaveRe> itemList = [];
-
 
 class IngredientModel {
   String type;
@@ -42,8 +42,6 @@ class _createrecipeState extends State<createrecipe> {
       ingredient.removeAt(index);
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -326,6 +324,22 @@ class _createrecipeState extends State<createrecipe> {
   }
 }
 
+class MySharedPreferences {
+  static Future<SharedPreferences> getInstance() async {
+    return await SharedPreferences.getInstance();
+  }
+
+  static Future<void> saveData(String key, String jsonData) async {
+    final prefs = await getInstance();
+    await prefs.setString(key, jsonData);
+  }
+
+  static Future<String?> getData(String key) async {
+    final prefs = await getInstance();
+    return prefs.getString(key);
+  }
+}
+
 class IngredientModule extends StatefulWidget {
   const IngredientModule({
     super.key,
@@ -343,13 +357,20 @@ class IngredientModule extends StatefulWidget {
 }
 
 class _IngredientModuleState extends State<IngredientModule> {
-  final typeTxt = TextEditingController();
-  final qtyTxt = TextEditingController();
-
+  TextEditingController typeTxtController = TextEditingController();
+  TextEditingController qtyTxtController = TextEditingController();
+  late ModelAddSaveRe modelAddSaveRe;
 
 
 
   @override
+  void dispose() {
+    qtyTxtController.dispose();
+    typeTxtController.dispose();
+    super.dispose();
+  }
+
+  // @override
   // void initState() {
   //   super.initState();
   //   typeTxt.text = widget.ingredientModel.type;
@@ -370,21 +391,22 @@ class _IngredientModuleState extends State<IngredientModule> {
       ),
     );
   }*/
-  Future<void> saveData() async {
-    final prefs = await SharedPreferences.getInstance();
-    final addRec =
-        ModelAddSaveRe(saveretitle: qtyTxt.text, devlop: typeTxt.text);
-    setState(() {
-      list.add(addRec);
-    });
-    await prefs.setString('listA', jsonEncode(list));
-     await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Home(),
-      ),
-    );
-  }
+  // Future<void> saveData() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final addRec =
+  //       ModelAddSaveRe(saveretitle: qtyTxt.text, devlop: typeTxt.text);
+  //   setState(() {
+  //     list.add(addRec);
+  //   });
+  //   await prefs.setString('listA', jsonEncode(list));
+  //   print(addRec);
+  //   await Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => const Home(),
+  //     ),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -395,8 +417,21 @@ class _IngredientModuleState extends State<IngredientModule> {
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: InkWell(
-             onTap:
-              saveData,
+              onTap: () {
+                final data = qtyTxtController.text;
+                final data1 = typeTxtController.text;
+                final filed={
+                  'data':data,
+                  'data1':data1,
+                };
+                final jsonData=jsonEncode(filed);
+                MySharedPreferences.saveData('filed', jsonData);
+                //  modelAddSaveRe = ModelAddSaveRe(data1, data);
+                // final encodedData = DataEncoding.encodeData(modelAddSaveRe);
+                // MySharedPreferences.saveData('data', encodedData);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Home()));
+              },
               child: Container(
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
@@ -417,7 +452,7 @@ class _IngredientModuleState extends State<IngredientModule> {
                 left: 20,
               ),
               child: TextFormField(
-                controller: qtyTxt,
+                controller: qtyTxtController,
                 maxLines: 1,
                 onChanged: (value) {
                   setState(() {
@@ -447,7 +482,7 @@ class _IngredientModuleState extends State<IngredientModule> {
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 40),
               child: TextFormField(
-                controller: typeTxt,
+                controller: typeTxtController,
                 maxLines: 1,
                 onChanged: (value) {
                   setState(() {
@@ -474,8 +509,8 @@ class _IngredientModuleState extends State<IngredientModule> {
               ),
             ),
           ),
-          // if (widget.ingredientModel.qty.isNotEmpty ||
-          //     widget.ingredientModel.type.isNotEmpty)
+          if (widget.ingredientModel.qty.isNotEmpty ||
+              widget.ingredientModel.type.isNotEmpty)
             InkWell(
               onTap: () {
                 setState(() {
@@ -501,7 +536,7 @@ class _IngredientModuleState extends State<IngredientModule> {
         ],
       ),
     );
-   }
+  }
   // void delete() async {
   //   List<ModelAddSaveRe> loadedItemList =  loadData();
   //   setState(() {
@@ -509,7 +544,6 @@ class _IngredientModuleState extends State<IngredientModule> {
   //     ..addAll(loadedItemList);
   //   });
   // }
-
 }
 
 // import 'package:flutter/material.dart';
@@ -587,6 +621,7 @@ class _IngredientModuleState extends State<IngredientModule> {
 //     itemList.map((item) => json.encode(item.toJson())).toList();
 //     await prefs.setStringList('itemList', encodedDataList);
 //   }
+
 //
 //   @override
 //   Widget build(BuildContext context) {
@@ -667,17 +702,3 @@ class _IngredientModuleState extends State<IngredientModule> {
 //         .map((encodedItem) => Item.fromJson(json.decode(encodedItem)))
 //         .toList();
 //     return
-
-
-
-
-
-
-
-
-
-
-
-
-
-

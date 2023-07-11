@@ -9,6 +9,17 @@ import 'package:mixfoodapp/Constants/text.dart';
 import 'package:mixfoodapp/Page/notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+class MySharedPreferences {
+  static Future<SharedPreferences> getInstance()  async {
+    return await SharedPreferences.getInstance();
+  }
+
+  static Future<String?> getData(String key) async {
+    final prefs = await getInstance();
+    return prefs.getString(key);
+  }
+}
+
 List<Model> saveVideo = [];
 void saveVideoCheck(Model saveAllVideos) {
   if (saveVideo.contains(saveAllVideos)) {
@@ -26,33 +37,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
-
+  Map<String,dynamic>filed={};
   @override
   void initState() {
     super.initState();
-    loadData();
+    fetchData();
   }
-  Future<void> loadData() async {
-    final shared = await SharedPreferences.getInstance();
-
-    final string = shared.getString('listA') ?? '';
-    final listA = jsonDecode(string) as List;
-    final items = listA.map((e) => e.toJson().toList());
-    await shared.setString('listA', jsonEncode(items));
-    print(items);
+  void fetchData() async {
+    final jsonData = await MySharedPreferences.getData('filed');
+    if (jsonData != null) {
+       setState(() {
+         filed=jsonDecode(jsonData)as Map<String,dynamic>;
+        filed = jsonDecode(jsonData)as Map<String,dynamic>;
+      });
+      print(filed);
+    }
   }
-
-  // final prefs = await SharedPreferences.getInstance();
-  // final qtyte = prefs.getString('qty');
-  // final typete = prefs.getString('type');
-  // setState(() {
-  //   if (qtyte != null) texts.add(qtyte);
-  //   if (typete != null) texts.add(typete);
-  // });
-  // print(qtyte);
-  // print(typete);
+  // Future<void> loadData() async {
+  //   final shared = await SharedPreferences.getInstance();
+  //   final string = shared.getString('listA') ?? '';
+  //   final listA = jsonDecode(string) as List;
+  //   final items = listA.map((e) => e.toJson().toString());
+  //   await shared.setString('listA', jsonEncode(items));
+  //   print(items);
   // }
-
   int isSec = 0;
   List<String> category = [
     'Salad',
@@ -62,9 +70,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   ];
   bool save = false;
   int issave = 0;
-
   final PageStorageBucket bucket = PageStorageBucket();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,8 +112,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     'Tranding now 🔥',
                     style: CustomTextStyle.poppinsBoldh5,
                   ),
-                  Row(
-                    children: const [
+                  const Row(
+                    children: [
                       Icon(
                         Icons.arrow_forward,
                         color: Colors.red,
@@ -136,7 +142,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 itemCount: savere.length,
                 itemBuilder: (_, index) {
                   final data = savere[index];
-                   return Column(
+                  return Column(
                     children: [
                       Stack(
                         children: [
@@ -459,7 +465,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  right: 10, top: 40,),
+                                                right: 10,
+                                                top: 40,
+                                              ),
                                               child: Container(
                                                 height: 24,
                                                 width: 24,
@@ -605,9 +613,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   child: Text(
                                     'Time',
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        color: ColorsNeutral.Neutral30,
-                                        fontWeight: FontWeight.w400,),
+                                      fontSize: 12,
+                                      color: ColorsNeutral.Neutral30,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -855,13 +864,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                 fontSize: 20,
                                 color: ColorsNeutral.Neutral90),
                           ),
-                          Row(
-                            children: const [
+                          const Row(
+                            children: [
                               Text('See all',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.red,
-                                      fontWeight: FontWeight.w600)),
+                                      fontWeight: FontWeight.w600,),),
                               Icon(
                                 Icons.arrow_forward,
                                 color: Colors.red,
@@ -928,8 +937,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             'Popular creators',
                             style: CustomTextStyle.poppinsBoldh5,
                           ),
-                          Row(
-                            children: const [
+                          const Row(
+                            children: [
                               Text(
                                 'See all',
                                 style:
@@ -987,4 +996,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 }
 
-
+// class DataEncoding {
+//   static String encodeData(ModelAddSaveRe modelAddSaveRe) {
+//     final jsonData = jsonEncode(modelAddSaveRe.toJson());
+//     return jsonData;
+//   }
+//
+//   static ModelAddSaveRe decodeData(String jsonData) {
+//     final decodeData = jsonDecode(jsonData);
+//     return ModelAddSaveRe.fromJson(decodeData);
+//   }
+// }

@@ -1,7 +1,5 @@
-
 import 'dart:convert';
 import 'dart:core';
-
 
 class Models {
   String freslist;
@@ -264,21 +262,23 @@ List<Model3> salad = [
   )
 ];
 
+
+
 class ModelAddSaveRe {
   ModelAddSaveRe({
-   required this.saveretitle,
-   required this.devlop,
+    required this.saveretitle,
+    required this.devlop,
   });
 
   factory ModelAddSaveRe.fromJson(Map<String, dynamic> json) => ModelAddSaveRe(
-        saveretitle: json['savTitle'] as String,
-        devlop: json['devlop'] as String,
-      );
+    saveretitle: json['savTitle'] as String,
+    devlop: json['devlop'] as String,
+  );
   String saveretitle;
   String devlop;
 
   Map<String, dynamic> toJson() => {
-        'savTitle': saveretitle,
-        'devlop': devlop,
-      };
+    'savTitle': saveretitle,
+    'devlop': devlop,
+  };
 }

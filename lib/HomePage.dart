@@ -26,11 +26,11 @@ class HomePage extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(
+                const Positioned(
                     top: 77,
                     left: 80,
                     child: Row(
-                      children: const [
+                      children: [
                         Icon(
                           Icons.star_rate_rounded,
                           color: Colors.white,

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:core';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Models {
   String freslist;
   String txt;
@@ -265,20 +267,24 @@ List<Model3> salad = [
 
 
 class ModelAddSaveRe {
-  ModelAddSaveRe({
+  ModelAddSaveRe( {
     required this.saveretitle,
     required this.devlop,
   });
 
-  factory ModelAddSaveRe.fromJson(Map<String, dynamic> json) => ModelAddSaveRe(
-    saveretitle: json['savTitle'] as String,
-    devlop: json['devlop'] as String,
-  );
+  factory ModelAddSaveRe.fromJson(Map<String, dynamic> json) =>
+      ModelAddSaveRe(
+        saveretitle: json['savTitle'] as String,
+        devlop: json['devlop'] as String,
+      );
   String saveretitle;
   String devlop;
 
-  Map<String, dynamic> toJson() => {
-    'savTitle': saveretitle,
-    'devlop': devlop,
-  };
+  Map<String, dynamic> toJson() =>
+      {
+        'savTitle': saveretitle,
+        'devlop': devlop,
+      };
+
+
 }

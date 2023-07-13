@@ -4,11 +4,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
-
 import 'package:mixfoodapp/Constants/text.dart';
+import 'package:mixfoodapp/Page/createrecipe.dart';
 import 'package:mixfoodapp/Page/notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class MySharedPreferences {
   static Future<SharedPreferences> getInstance()  async {
     return await SharedPreferences.getInstance();
@@ -37,6 +36,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
+
   Map<String,dynamic>filed={};
   @override
   void initState() {
@@ -46,13 +46,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   void fetchData() async {
     final jsonData = await MySharedPreferences.getData('filed');
     if (jsonData != null) {
-       setState(() {
-         filed=jsonDecode(jsonData)as Map<String,dynamic>;
+      setState(() {
+        filed=jsonDecode(jsonData)as Map<String,dynamic>;
         filed = jsonDecode(jsonData)as Map<String,dynamic>;
       });
       print(filed);
     }
   }
+
   // Future<void> loadData() async {
   //   final shared = await SharedPreferences.getInstance();
   //   final string = shared.getString('listA') ?? '';
@@ -280,21 +281,27 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      Row(
+                      const Row(
                         children: [
-                          Text(
-                            savere[index].saveretitle,
-                            //texts[index],
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: ColorsNeutral.Neutral90,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(
+                          // Text(storedUserData?.saveretitle??''),
+                          // Text(storedUserData?.devlop??''),
+                          // Text('Data: ${storedUserData.devlop}'),
+                          // Text('Data1: ${storedUserData.saveretitle}'),
+                          // Text('Field 1: ${data}'),
+                          // Text('Field 2: ${data}'),
+                          // Text(
+                          //   savere[index].saveretitle,
+                          //   //texts[index],
+                          //   style: TextStyle(
+                          //     fontSize: 16,
+                          //     color: ColorsNeutral.Neutral90,
+                          //     fontWeight: FontWeight.w600,
+                          //   ),
+                          // ),
+                          SizedBox(
                             width: 160,
                           ),
-                          const Icon(Icons.more_horiz),
+                          Icon(Icons.more_horiz),
                         ],
                       ),
                       Padding(
@@ -866,11 +873,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           ),
                           const Row(
                             children: [
-                              Text('See all',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w600,),),
+                              Text(
+                                'See all',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                               Icon(
                                 Icons.arrow_forward,
                                 color: Colors.red,

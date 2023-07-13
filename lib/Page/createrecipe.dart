@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
 import 'package:mixfoodapp/Constants/text.dart';
 import 'package:mixfoodapp/Page/home.dart';
+import 'package:mixfoodapp/Page/persondetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<ModelAddSaveRe> list = [];
@@ -324,21 +326,7 @@ class _createrecipeState extends State<createrecipe> {
   }
 }
 
-class MySharedPreferences {
-  static Future<SharedPreferences> getInstance() async {
-    return await SharedPreferences.getInstance();
-  }
 
-  static Future<void> saveData(String key, String jsonData) async {
-    final prefs = await getInstance();
-    await prefs.setString(key, jsonData);
-  }
-
-  static Future<String?> getData(String key) async {
-    final prefs = await getInstance();
-    return prefs.getString(key);
-  }
-}
 
 class IngredientModule extends StatefulWidget {
   const IngredientModule({
@@ -359,16 +347,37 @@ class IngredientModule extends StatefulWidget {
 class _IngredientModuleState extends State<IngredientModule> {
   TextEditingController typeTxtController = TextEditingController();
   TextEditingController qtyTxtController = TextEditingController();
-  late ModelAddSaveRe modelAddSaveRe;
 
 
+  // @override
+  // void initState() {
+  //   typeTxtController = TextEditingController();
+  //   qtyTxtController = TextEditingController();
+  //   super.initState();
+  // }
 
-  @override
-  void dispose() {
-    qtyTxtController.dispose();
-    typeTxtController.dispose();
-    super.dispose();
-  }
+  // Future<void> _saveData() async {
+  //   var qty = qtyTxtController.text;
+  //   var type = typeTxtController.text;
+  //   var userData = ModelAddSaveRe(
+  //       saveretitle: qtyTxtController.text, devlop: typeTxtController.text);
+  //   await MySharedPreferencesHelper.saveUserData('abc', userData);
+  //   print(userData);
+  //   await Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+  // }
+
+  // @override
+  // void dispose() {
+  //   qtyTxtController.dispose();
+  //   typeTxtController.dispose();
+  //   super.dispose();
+  // }
+  // void _saveData() async {
+  //   String type = typeTxtController.text;
+  //   String qty =qtyTxtController.text;
+  //   final ModelAddSaveRe modelAddSaveRe=ModelAddSaveRe(saveretitle: qty, devlop:type);
+  //  await SharedPreferencesHelper('modelAddSaveRe', modelAddSaveRe);
+  //  }
 
   // @override
   // void initState() {
@@ -376,21 +385,7 @@ class _IngredientModuleState extends State<IngredientModule> {
   //   typeTxt.text = widget.ingredientModel.type;
   //   qtyTxt.text = widget.ingredientModel.qty;
   // }
-  /*Future<void> saveData() async {
-    final prefs = await SharedPreferences.getInstance();
-    final qty = qtyTxt.text;
-    final type = typeTxt.text;
-    // await prefs.setString('qty', qtyTxt.text);
-    // await prefs.setString('type', typeTxt.text);
-    // print(qtyTxt);
-    // print(typeTxt);
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Home(),
-      ),
-    );
-  }*/
+
   // Future<void> saveData() async {
   //   final prefs = await SharedPreferences.getInstance();
   //   final addRec =
@@ -417,20 +412,26 @@ class _IngredientModuleState extends State<IngredientModule> {
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: InkWell(
-              onTap: () {
+              onTap: () async {
+                final pref = await SharedPreferences.getInstance();
                 final data = qtyTxtController.text;
                 final data1 = typeTxtController.text;
-                final filed={
-                  'data':data,
-                  'data1':data1,
-                };
-                final jsonData=jsonEncode(filed);
-                MySharedPreferences.saveData('filed', jsonData);
-                //  modelAddSaveRe = ModelAddSaveRe(data1, data);
-                // final encodedData = DataEncoding.encodeData(modelAddSaveRe);
-                // MySharedPreferences.saveData('data', encodedData);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Home()));
+                final data2 = jsonEncode({'data': data, 'data1': data1});
+                await pref.setString('data2', data2);
+                print(data2);
+
+                await Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+                // final data = qtyTxtController.text;
+                // final data1 = typeTxtController.text;
+                // final filed = {
+                //   'data': data,
+                //   'data1': data1,
+                // };
+                // final jsonData = jsonEncode(filed);
+                // await MySharedPreferences.saveData('filed', jsonData);
+                // await Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => const Home()));
               },
               child: Container(
                 padding: const EdgeInsets.all(15),
@@ -537,168 +538,4 @@ class _IngredientModuleState extends State<IngredientModule> {
       ),
     );
   }
-  // void delete() async {
-  //   List<ModelAddSaveRe> loadedItemList =  loadData();
-  //   setState(() {
-  //     itemList..clear()
-  //     ..addAll(loadedItemList);
-  //   });
-  // }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'dart:convert';
-//
-// void main() {
-//   runApp(MyApp());
-// }
-//
-// class Item {
-//   final String name;
-//
-//   Item(this.name);
-//
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'name': name,
-//     };
-//   }
-//0
-//   factory Item.fromJson(Map<String, dynamic> json) {
-//     return Item(json['name']);
-//   }
-// }
-//
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: FirstScreen(),
-//       routes: {
-//         '/second': (context) => SecondScreen(),
-//       },
-//     );
-//   }
-// }
-//
-// class FirstScreen extends StatefulWidget {
-//   @override
-//   _FirstScreenState createState() => _FirstScreenState();
-// }
-//
-// class _FirstScreenState extends State<FirstScreen> {
-//   final List<Item> itemList = [
-//     Item('Item 1'),
-//     Item('Item 2'),
-//     Item('Item 3'),
-//   ];
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _loadData();
-//   }
-//
-//   void _loadData() async {
-//     List<Item> loadedItemList = await loadData();
-//     setState(() {
-//       itemList.clear();
-//       itemList.addAll(loadedItemList);
-//     });
-//   }
-//
-//   void _deleteItem(int index) {
-//     setState(() {
-//       itemList.removeAt(index);
-//       _saveData();
-//     });
-//   }
-//
-//   void _saveData() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     List<String> encodedDataList =
-//     itemList.map((item) => json.encode(item.toJson())).toList();
-//     await prefs.setStringList('itemList', encodedDataList);
-//   }
-
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('First Screen'),
-//       ),
-//       body: ListView.builder(
-//         itemCount: itemList.length,
-//         itemBuilder: (context, index) {
-//           return ListTile(
-//             title: Text(itemList[index].name),
-//             trailing: IconButton(
-//               icon: Icon(Icons.delete),
-//               onPressed: () {
-//                 _deleteItem(index);
-//               },
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-//
-// class SecondScreen extends StatefulWidget {
-//   @override
-//   _SecondScreenState createState() => _SecondScreenState();
-// }
-//
-// class _SecondScreenState extends State<SecondScreen> {
-//   List<Item> itemList = [];
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _loadData();
-//   }
-//
-//   void _loadData() async {
-//     List<Item> loadedItemList = await loadData();
-//     setState(() {
-//       itemList.clear();
-//       itemList.addAll(loadedItemList);
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Second Screen'),
-//       ),
-//       body: ListView.builder(
-//         itemCount: itemList.length,
-//         itemBuilder: (context, index) {
-//           return ListTile(
-//             title: Text(itemList[index].name),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-//
-// Future<void> saveData(List<Item> itemList) async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   List<String> encodedDataList =
-//   itemList.map((item) => json.encode(item.toJson())).toList();
-//   await prefs.setStringList('itemList', encodedDataList);
-// }
-//
-// Future<List<Item>> loadData() async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   List<String>? encodedDataList = prefs.getStringList('itemList');
-//   if (encodedDataList != null) {
-//     List<Item> loadedItemList = encodedDataList
-//         .map((encodedItem) => Item.fromJson(json.decode(encodedItem)))
-//         .toList();
-//     return

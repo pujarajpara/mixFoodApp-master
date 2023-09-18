@@ -1,47 +1,153 @@
 import 'dart:convert';
-
+import 'dart:developer';
+import 'dart:io';
 
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
-import 'package:mixfoodapp/Constants/text.dart';
+import 'package:mixfoodapp/Page/Bottombar.dart';
 import 'package:mixfoodapp/Page/home.dart';
-import 'package:mixfoodapp/Page/persondetails.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-List<ModelAddSaveRe> list = [];
-final List<ModelAddSaveRe> itemList = [];
-
-class IngredientModel {
-  String type;
-  String qty;
-
-  IngredientModel({required this.qty, required this.type});
-}
-
 class createrecipe extends StatefulWidget {
-  const createrecipe({Key? key}) : super(key: key);
+  final List<IngredientModel> ingre;
+
+  const createrecipe({
+    super.key,
+    required this.ingre,
+  });
 
   @override
   State<createrecipe> createState() => _createrecipeState();
 }
 
 class _createrecipeState extends State<createrecipe> {
+  File? imageFile;
+  Future<void> _getImage(ImageSource source) async {
+    final image = await ImagePicker().pickImage(source: source);
+
+    if (image != null) {
+      setState(() {
+        imageFile = File(image.path);
+      });
+    } else {
+      print('No image selected.');
+    }
+  }
+
+  String selectedImagePath = '';
+
+  Future<void> Save() async {
+    if (imageFile != null) {
+      print('Selected image path: ${imageFile!.path}');
+    }
+
+    await _onSaveButtonClick(ingredientList);
+  }
+
+  Future<void> _showImageSourceModal(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.camera),
+              title: Text('Camera'),
+              onTap: () {
+                Navigator.pop(context);
+                _getImage(ImageSource.camera);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.image),
+              title: Text('Gallery'),
+              onTap: () {
+                Navigator.pop(context);
+                _getImage(ImageSource.gallery);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   int isSec = 0;
-  List<IngredientModel> ingredient = [IngredientModel(qty: '', type: '')];
+  List<IngredientModel> ingredientList = [];
 
   void addEmptyIngredient() {
     setState(() {
-      ingredient.add(IngredientModel(qty: '', type: ''));
+      ingredientList.add(IngredientModel(qty: '', type: ''));
     });
+  }
+
+  void onIngredientDataChanged(String qty, String type, int index) {
+    setState(() {
+      ingredientList[index].qty = qty;
+      ingredientList[index].type = type;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _onSaveButtonClick(List<IngredientModel> ingredientList) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('data');
+    final jsonData =
+        jsonEncode(ingredientList.map((item) => item.toJson()).toList());
+    await prefs.setString('data', jsonData);
+    log(jsonData);
+
+    await Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Bottomtabbar(),
+      ),
+      (route) => false,
+    );
+  }
+
+  // Future<void> Save() async {
+  //   await _onSaveButtonClick(ingredientList);
+  // }
+
+  Future<void> _loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonData = prefs.getString('data');
+    if (jsonData != null) {
+      final data = jsonDecode(jsonData) as List;
+      setState(() {
+        ingredientList = data
+            .map((item) =>
+                IngredientModel.fromJson(item as Map<String, dynamic>))
+            .toList();
+      });
+    }
   }
 
   void removeIngredient(int index) {
     setState(() {
-      ingredient.removeAt(index);
+      ingredientList.removeAt(index);
+    });
+  }
+
+  void updateIngredient(int index, IngredientModel newIngredient) {
+    setState(() {
+      ingredientList[index] = newIngredient;
     });
   }
 
@@ -52,14 +158,7 @@ class _createrecipeState extends State<createrecipe> {
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: () async {
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const Home(),
-              ),
-            );
-          },
+          onTap: () async {},
           child: const Icon(
             Icons.arrow_back,
             color: Colors.black,
@@ -76,377 +175,413 @@ class _createrecipeState extends State<createrecipe> {
         ],
         backgroundColor: Colors.white,
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20, top: 20),
-            child: Text(
-              'Create recipe',
-              style: TextStyle(
-                color: ColorsNeutral.Neutral90,
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
+      body: Center(
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 20),
+              child: Text(
+                'Create recipe',
+                style: TextStyle(
+                  color: ColorsNeutral.Neutral90,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
               ),
             ),
-          ),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: SizedBox(
-                  height: 250,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      'Assets/createrecipeimage.png',
-                      fit: BoxFit.cover,
-                    ),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: SizedBox(
+                    height: 250,
+                    child: imageFile != null
+                        ? Image.file(
+                            imageFile!,
+                            fit: BoxFit.fill,
+                          )
+                        : Image.asset(
+                            'Assets/createrecipeimage.png',
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(33),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3.0),
-                  child: Container(
-                    height: 65,
-                    width: 65,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.only(left: 2),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0x4A303030),
-                    ),
-                    child: const Icon(
-                      Icons.play_arrow_rounded,
-                      color: Colors.white,
-                      size: 42,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 30,
-                top: 30,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFFFFFF),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.edit,
-                        color: Colors.red,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(33),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                    child: Container(
+                      height: 65,
+                      width: 65,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.only(left: 2),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0x4A303030),
                       ),
-                      onPressed: () {},
+                      child: const Icon(
+                        Icons.play_arrow_rounded,
+                        color: Colors.white,
+                        size: 42,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 30,
+                  top: 30,
+                  child: DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFFFFFF),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.edit,
+                          color: Colors.red,
+                        ),
+                        onPressed: () async {
+                          _showImageSourceModal(context);
+                          // await showMenu(
+                          //   context: context,
+                          //   position: RelativeRect.fill,
+                          //   items: [
+                          //     PopupMenuItem(
+                          //       value: ImageSource.camera,
+                          //       child: ListTile(
+                          //         leading: SizedBox(
+                          //             height: 30,
+                          //             child: Image.asset(
+                          //               'Assets/camera Icon.png',
+                          //             )),
+                          //         title: const Text(
+                          //           'Camera',
+                          //           style: TextStyle(
+                          //               fontSize: 18, color: Colors.black),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     PopupMenuItem(
+                          //       value: ImageSource.gallery,
+                          //       child: ListTile(
+                          //         leading: SizedBox(
+                          //             height: 30,
+                          //             child: Image.asset(
+                          //               'Assets/gallery Icon.png',
+                          //             )),
+                          //         title: const Text('Gallery'),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ).then(
+                          //   (value) {
+                          //     if (value != null) {
+                          //       _getImage(value);
+                          //     }
+                          //   },
+                          // );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 30,
+              ),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  hintText: ' Bento lunch box ideas for work',
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color: Colors.red,
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 30,
             ),
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                hintText: ' Bento lunch box ideas for work',
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: const BorderSide(color: Colors.red),
-                ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: ColorsNeutral.Neutral20,
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Image.asset('Assets/Serves.png'),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: Text(
+                      'Server',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: 10,
+                    ),
+                    child: Text(
+                      '01',
+                      style: TextStyle(
+                          fontSize: 14, color: ColorsNeutral.Neutral40),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Icon(Icons.arrow_forward),
+                  ),
+                ],
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-            height: 60,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: ColorsNeutral.Neutral20,
+            Container(
+              margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: ColorsNeutral.Neutral20,
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Image.asset('Assets/cooktimeicon.png'),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: Text(
+                      'Cook time',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: 10,
+                    ),
+                    child: Text(
+                      '45 min',
+                      style: TextStyle(
+                          fontSize: 14, color: ColorsNeutral.Neutral40),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Icon(Icons.arrow_forward),
+                  ),
+                ],
+              ),
             ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Image.asset('Assets/Serves.png'),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    'Server',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 10,
-                  ),
-                  child: Text(
-                    '01',
-                    style:
-                        TextStyle(fontSize: 14, color: ColorsNeutral.Neutral40),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: Icon(Icons.arrow_forward),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-            height: 60,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: ColorsNeutral.Neutral20,
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Image.asset('Assets/cooktimeicon.png'),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    'Cook time',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 10,
-                  ),
-                  child: Text(
-                    '45 min',
-                    style:
-                        TextStyle(fontSize: 14, color: ColorsNeutral.Neutral40),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: Icon(Icons.arrow_forward),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, top: 12),
-            child: Text(
-              'Ingredients',
-              style: TextStyle(
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 12),
+              child: Text(
+                'Ingredients',
+                style: TextStyle(
                   fontSize: 20,
                   color: ColorsNeutral.Neutral100,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
-          ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: ingredient.length,
-              itemBuilder: (context, index) {
-                return IngredientModule(
-                  key: UniqueKey(),
-                  ingredientModel: ingredient[index],
-                  index: index,
-                  remove: removeIngredient,
-                );
-              }),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: InkWell(
-              onTap: addEmptyIngredient,
-              child: const Padding(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  '+ Add Ingredient',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-          ),
-          // Padding(
-          //   padding: const EdgeInsets.only(left: 20, right: 20, bottom: 50),
-          //   child: InkWell(
-          //     onTap: () {
-          //       final inputText1 = qtyTxt.text;
-          //       final inputText2 = typeTxt.text;
-          //       saveData(inputText1, inputText2);
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => const Home()));
-          //
-          //       // SharedPreferences sharedPrefrences =
-          //       //     await SharedPreferences.getInstance();
-          //       // sharedPrefrences.setString('qty', qtyTxt.text);
-          //       // sharedPrefrences.setString('type', typeTxt.text);
-          //       //
-          //       // Navigator.push(
-          //       //     context, MaterialPageRoute(builder: (context) => home()));
-          //     },
-          //     child: Container(
-          //       height: 54,
-          //       width: 335,
-          //       padding:
-          //           const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-          //       decoration: const BoxDecoration(
-          //         color: Colors.red,
-          //         borderRadius: BorderRadius.all(
-          //           Radius.circular(10.0),
-          //         ),
-          //       ),
-          //       child: const Center(
-          //         child: Text(
-          //           "Save my recipes",
-          //           style: TextStyle(
-          //             color: Colors.white,
-          //             fontSize: 16,
-          //             fontWeight: FontWeight.w600,
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        ],
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: ingredientList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return IngredientModule(
+                  key: UniqueKey(),
+                  ingredientModel: ingredientList[index],
+                  index: index,
+                  remove: removeIngredient,
+                  updateIngredient: (newIngredient) {
+                    updateIngredient(index, newIngredient);
+                  },
+                  ingredientList: '',
+                );
+              },
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: GestureDetector(
+                    onTap: addEmptyIngredient,
+                    child: const Text(
+                      '+ Add new Ingredient',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: GestureDetector(
+                onTap: Save,
+                child: Container(
+                  height: 54,
+                  width: 335,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Save my recipes',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+  //
+  // _imgFromGallery() async {
+  //   await picker
+  //       .pickImage(source: ImageSource.gallery, imageQuality: 50)
+  //       .then((value) {
+  //     if (value != null) {
+  //       _cropImage(File(value.path));
+  //     }
+  //   });
+  // }
+
+  // _imgFromCamera() async {
+  //   await picker
+  //       .pickImage(source: ImageSource.camera, imageQuality: 50)
+  //       .then((value) {
+  //     if (value != null) {
+  //       _cropImage(File(value.path));
+  //     }
+  //   });
+  // }
+
+  _cropImage(File imgFile) async {
+    final croppedFile = await ImageCropper().cropImage(
+        sourcePath: imgFile.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: "Image Cropper",
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: "Image Cropper",
+          )
+        ]);
+    // if (croppedFile != null) {
+    //   imageCache.clear();
+    //   setState(() {
+    //     imageFile = File(croppedFile.path);
+    //   });
+    // }
+  }
 }
 
-
-
 class IngredientModule extends StatefulWidget {
-  const IngredientModule({
-    super.key,
+  IngredientModule({
     required this.ingredientModel,
     required this.remove,
     required this.index,
-  });
+    Key? key,
+    required ingredientList,
+    required this.updateIngredient,
+  }) : super(key: key);
 
   final int index;
   final IngredientModel ingredientModel;
   final void Function(int index) remove;
+  final Function(IngredientModel) updateIngredient;
 
   @override
   State<IngredientModule> createState() => _IngredientModuleState();
 }
 
 class _IngredientModuleState extends State<IngredientModule> {
-  TextEditingController typeTxtController = TextEditingController();
-  TextEditingController qtyTxtController = TextEditingController();
+  late TextEditingController typeTxtController;
+  late TextEditingController qtyTxtController;
 
+  @override
+  void initState() {
+    super.initState();
+    qtyTxtController = TextEditingController(text: widget.ingredientModel.qty);
+    typeTxtController =
+        TextEditingController(text: widget.ingredientModel.type);
+  }
 
-  // @override
-  // void initState() {
-  //   typeTxtController = TextEditingController();
-  //   qtyTxtController = TextEditingController();
-  //   super.initState();
-  // }
+  @override
+  void dispose() {
+    qtyTxtController.clear();
+    typeTxtController.clear();
+    super.dispose();
+  }
 
-  // Future<void> _saveData() async {
-  //   var qty = qtyTxtController.text;
-  //   var type = typeTxtController.text;
-  //   var userData = ModelAddSaveRe(
-  //       saveretitle: qtyTxtController.text, devlop: typeTxtController.text);
-  //   await MySharedPreferencesHelper.saveUserData('abc', userData);
-  //   print(userData);
-  //   await Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-  // }
+  void _updateIngredient() {
+    final newIngredient = IngredientModel(
+      qty: qtyTxtController.text,
+      type: typeTxtController.text,
+    );
+    widget.updateIngredient(newIngredient);
+  }
 
-  // @override
-  // void dispose() {
-  //   qtyTxtController.dispose();
-  //   typeTxtController.dispose();
-  //   super.dispose();
-  // }
-  // void _saveData() async {
-  //   String type = typeTxtController.text;
-  //   String qty =qtyTxtController.text;
-  //   final ModelAddSaveRe modelAddSaveRe=ModelAddSaveRe(saveretitle: qty, devlop:type);
-  //  await SharedPreferencesHelper('modelAddSaveRe', modelAddSaveRe);
-  //  }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   typeTxt.text = widget.ingredientModel.type;
-  //   qtyTxt.text = widget.ingredientModel.qty;
-  // }
-
-  // Future<void> saveData() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final addRec =
-  //       ModelAddSaveRe(saveretitle: qtyTxt.text, devlop: typeTxt.text);
-  //   setState(() {
-  //     list.add(addRec);
-  //   });
-  //   await prefs.setString('listA', jsonEncode(list));
-  //   print(addRec);
-  //   await Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => const Home(),
-  //     ),
-  //   );
-  // }
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: InkWell(
-              onTap: () async {
-                final pref = await SharedPreferences.getInstance();
-                final data = qtyTxtController.text;
-                final data1 = typeTxtController.text;
-                final data2 = jsonEncode({'data': data, 'data1': data1});
-                await pref.setString('data2', data2);
-                print(data2);
-
-                await Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Home()));
-                // final data = qtyTxtController.text;
-                // final data1 = typeTxtController.text;
-                // final filed = {
-                //   'data': data,
-                //   'data1': data1,
-                // };
-                // final jsonData = jsonEncode(filed);
-                // await MySharedPreferences.saveData('filed', jsonData);
-                // await Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => const Home()));
-              },
-              child: Container(
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(10),
-                  color: true ? Colors.blueGrey : Colors.grey,
-                ),
-                child: const Text(
-                  '+',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-                ),
-              ),
-            ),
-          ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -514,9 +649,11 @@ class _IngredientModuleState extends State<IngredientModule> {
               widget.ingredientModel.type.isNotEmpty)
             InkWell(
               onTap: () {
-                setState(() {
-                  widget.remove(widget.index);
-                });
+                setState(
+                  () {
+                    widget.remove(widget.index);
+                  },
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 10),

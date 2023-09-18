@@ -5,8 +5,6 @@ import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Page/home.dart';
 import 'package:mixfoodapp/Page/recipedetails.dart';
 
-
-
 class saveIcon extends StatefulWidget {
   const saveIcon({
     super.key,
@@ -88,117 +86,118 @@ class _saveIconState extends State<saveIcon> {
                       child: Stack(
                         children: [
                           Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      saveVideo[index].saverecipe,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    saveVideo[index].saverecipe,
+                                  ),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 30,
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black38,
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: 30,
-                                        width: 60,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black38,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.star_rate_rounded,
+                                          color: ColorsNeutral.Neutral0,
+                                          size: 18,
                                         ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.star_rate_rounded,
+                                        Text(
+                                          saveVideo[index].text,
+                                          style: TextStyle(
                                               color: ColorsNeutral.Neutral0,
-                                              size: 18,
-                                            ),
-                                            Text(
-                                              saveVideo[index].text,
-                                              style: TextStyle(
-                                                  color: ColorsNeutral.Neutral0,
-                                                  fontSize: 14),
-                                            ),
-                                          ],
+                                              fontSize: 14),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 80, left: 90),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(33),
-                                          child: BackdropFilter(
-                                            filter: ImageFilter.blur(
-                                                sigmaX: 3, sigmaY: 3),
-                                            child: Container(
-                                              height: 48,
-                                              width: 48,
-                                              alignment: Alignment.center,
-                                              padding: const EdgeInsets.only(
-                                                  left: 2),
-                                              decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Color(0x4A303030)),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const recipede(),),);
-                                                },
-                                                child: const Icon(
-                                                  Icons.play_arrow_rounded,
-                                                  color: Colors.white,
-                                                  size: 30,
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 80, left: 90),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(33),
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                            sigmaX: 3, sigmaY: 3),
+                                        child: Container(
+                                          height: 48,
+                                          width: 48,
+                                          alignment: Alignment.center,
+                                          padding:
+                                              const EdgeInsets.only(left: 2),
+                                          decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color(0x4A303030)),
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const recipede(),
                                                 ),
-                                              ),
+                                              );
+                                            },
+                                            child: const Icon(
+                                              Icons.play_arrow_rounded,
+                                              color: Colors.white,
+                                              size: 30,
                                             ),
                                           ),
                                         ),
                                       ),
-                                      Spacer(),
-                                      Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 50, top: 140),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 50, top: 140),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 30,
+                                          width: 50,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black38,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
                                           child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  height: 30,
-                                                  width: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.black38,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        '15:10',
-                                                        style: TextStyle(
-                                                            color: ColorsNeutral
-                                                                .Neutral0,
-                                                            fontSize: 12),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],),),
-                                    ],),
-                              ),),
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '15:10',
+                                                style: TextStyle(
+                                                    color:
+                                                        ColorsNeutral.Neutral0,
+                                                    fontSize: 12),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           Positioned(
                             top: 5,
                             right: 5,
@@ -232,11 +231,13 @@ class _saveIconState extends State<saveIcon> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(saveVideo[index].saveretitle,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: ColorsNeutral.Neutral90,
-                                  fontWeight: FontWeight.w600),),
+                          Text(
+                            saveVideo[index].saveretitle,
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: ColorsNeutral.Neutral90,
+                                fontWeight: FontWeight.w600),
+                          ),
                           const Icon(Icons.more_horiz),
                         ],
                       ),

@@ -1,25 +1,13 @@
-import 'dart:convert';
+import 'dart:core';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
 import 'package:mixfoodapp/Constants/text.dart';
-import 'package:mixfoodapp/Page/createrecipe.dart';
-import 'package:mixfoodapp/Page/notification.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-class MySharedPreferences {
-  static Future<SharedPreferences> getInstance()  async {
-    return await SharedPreferences.getInstance();
-  }
-
-  static Future<String?> getData(String key) async {
-    final prefs = await getInstance();
-    return prefs.getString(key);
-  }
-}
 
 List<Model> saveVideo = [];
+
 void saveVideoCheck(Model saveAllVideos) {
   if (saveVideo.contains(saveAllVideos)) {
     saveVideo.remove(saveAllVideos);
@@ -29,7 +17,9 @@ void saveVideoCheck(Model saveAllVideos) {
 }
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -37,31 +27,18 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
 
-  Map<String,dynamic>filed={};
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-  void fetchData() async {
-    final jsonData = await MySharedPreferences.getData('filed');
-    if (jsonData != null) {
-      setState(() {
-        filed=jsonDecode(jsonData)as Map<String,dynamic>;
-        filed = jsonDecode(jsonData)as Map<String,dynamic>;
-      });
-      print(filed);
-    }
-  }
-
-  // Future<void> loadData() async {
-  //   final shared = await SharedPreferences.getInstance();
-  //   final string = shared.getString('listA') ?? '';
-  //   final listA = jsonDecode(string) as List;
-  //   final items = listA.map((e) => e.toJson().toString());
-  //   await shared.setString('listA', jsonEncode(items));
-  //   print(items);
+  // List<Model> savere = [];
+  // List<IngredientModel> ingredientList1 = [];
+  // List<dynamic> mergeList = [];
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   mergeList..addAll(ingredientList1)
+  //   ..addAll(savere);
+  //   print(mergeList);
   // }
+
   int isSec = 0;
   List<String> category = [
     'Salad',
@@ -71,7 +48,30 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   ];
   bool save = false;
   int issave = 0;
+
+
+
+  // List<String> savere = [];
+  // List<String> ingredientList = [];
+
+  // List<Model> savere = [];
+  // List<Model> savere = [];
+  // List<IngredientModel> ingredientList1 = [];
+  //
+  // List mergeList = [];
+  //
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   mergeList.addAll(ingredientList1);
+  //   mergeList.addAll(savere);
+  //
+  //
+  // }
+
   final PageStorageBucket bucket = PageStorageBucket();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,6 +143,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 itemCount: savere.length,
                 itemBuilder: (_, index) {
                   final data = savere[index];
+
                   return Column(
                     children: [
                       Stack(
@@ -281,27 +282,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      const Row(
+                      Row(
                         children: [
-                          // Text(storedUserData?.saveretitle??''),
-                          // Text(storedUserData?.devlop??''),
-                          // Text('Data: ${storedUserData.devlop}'),
-                          // Text('Data1: ${storedUserData.saveretitle}'),
-                          // Text('Field 1: ${data}'),
-                          // Text('Field 2: ${data}'),
-                          // Text(
-                          //   savere[index].saveretitle,
-                          //   //texts[index],
-                          //   style: TextStyle(
-                          //     fontSize: 16,
-                          //     color: ColorsNeutral.Neutral90,
-                          //     fontWeight: FontWeight.w600,
-                          //   ),
-                          // ),
-                          SizedBox(
+                          Text(
+                            savere[index].saveretitle,
+                            //texts[index],
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: ColorsNeutral.Neutral90,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(
                             width: 160,
                           ),
-                          Icon(Icons.more_horiz),
+                          const Icon(Icons.more_horiz),
                         ],
                       ),
                       Padding(
@@ -584,14 +579,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.only(
-                                                  right: 10, top: 40),
+                                                right: 10,
+                                                top: 40,
+                                              ),
                                               child: Container(
                                                 height: 24,
                                                 width: 24,
                                                 decoration: BoxDecoration(
                                                   color: ColorsNeutral.Neutral0,
                                                   borderRadius:
-                                                      BorderRadius.circular(20),
+                                                      BorderRadius.circular(
+                                                    20,
+                                                  ),
                                                 ),
                                                 child: Row(
                                                   mainAxisAlignment:
@@ -628,8 +627,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 15, top: 10),
+                                  padding: const EdgeInsets.only(
+                                    left: 15,
+                                    top: 10,
+                                  ),
                                   child: Image.asset(
                                     salad[index].breafast,
                                     height: 130,
@@ -763,13 +764,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   padding: const EdgeInsets.only(top: 60),
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
-                                        horizontal: 10),
+                                      horizontal: 10,
+                                    ),
                                     height: 183,
                                     width: 150,
                                     decoration: BoxDecoration(
                                       color: const Color(0xfff1f1f1),
-                                      //color: ColorsNeutral.Neutral20,
-
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Column(
@@ -965,7 +965,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   ),
                   const Padding(padding: EdgeInsets.only(right: 20)),
                   SizedBox(
-                    height: 180,
+                    height: 150,
                     child: InkWell(
                       onTap: () {},
                       child: Padding(
@@ -1006,14 +1006,5 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 }
 
-// class DataEncoding {
-//   static String encodeData(ModelAddSaveRe modelAddSaveRe) {
-//     final jsonData = jsonEncode(modelAddSaveRe.toJson());
-//     return jsonData;
-//   }
-//
-//   static ModelAddSaveRe decodeData(String jsonData) {
-//     final decodeData = jsonDecode(jsonData);
-//     return ModelAddSaveRe.fromJson(decodeData);
-//   }
-// }
+// List<Map<String, dynamic>> savere = [];
+// List<Map<String, dynamic>> ingredientList = [];

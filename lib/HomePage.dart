@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Page/Bottombar.dart';
+import 'package:mixfoodapp/Page/createrecipe.dart';
 import 'package:mixfoodapp/Page/home.dart';
 
+import 'Constants/model.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+
+   HomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
@@ -36,7 +41,7 @@ class HomePage extends StatelessWidget {
                           color: Colors.white,
                         ),
                         Text(
-                          "60K + Premimum recipes",
+                          '60K + Premimum recipes',
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         )
                       ],
@@ -46,29 +51,31 @@ class HomePage extends StatelessWidget {
                   child: Text(
                     "Let's ",
                     style: TextStyle(
-                        fontSize: 70,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 70,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 340),
                   child: Text(
-                    "Cooking",
+                    'Cooking',
                     style: TextStyle(
-                        fontSize: 80,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                      fontSize: 80,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 540),
                   child: Text(
-                    "Find best recipes for cooking",
+                    'Find best recipes for cooking',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                        color: Colors.white,),
                   ),
                 ),
                 Padding(
@@ -85,13 +92,15 @@ class HomePage extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Bottomtabbar(),),
+                            builder: (context) =>  Bottomtabbar(
+                            ),
+                          ),
                           (route) => false,
                         );
                       },
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
                             'Start Cooking',
                             style: TextStyle(fontSize: 15, color: Colors.white),

@@ -9,7 +9,7 @@ class notification extends StatefulWidget {
 }
 
 class _notificationState extends State<notification> {
-  List notification = ["All", "Unread", "Read"];
+  List notification = ['All', 'Unread', 'Read'];
   int isSec = 0;
   @override
   Widget build(BuildContext context) {
@@ -18,11 +18,11 @@ class _notificationState extends State<notification> {
       appBar: AppBar(
         elevation: 0,
         title: const Text(
-          "Notification",
+          'Notification',
           style: TextStyle(color: Colors.black, fontSize: 24),
         ),
         actions: [
-          Image.asset("Assets/union.png"),
+          Image.asset('Assets/union.png'),
         ],
         backgroundColor: Colors.white,
       ),
@@ -37,7 +37,7 @@ class _notificationState extends State<notification> {
                   scrollDirection: Axis.horizontal,
                   itemCount: 3,
                   itemBuilder: (context, index) {
-                    return InkWell(
+                    return GestureDetector(
                       onTap: () {
                         setState(() {
                           isSec = index;
@@ -55,10 +55,10 @@ class _notificationState extends State<notification> {
                         child: Center(
                           child: Text(
                             notification[index].toString(),
-                            style: (TextStyle(
+                            style: TextStyle(
                                 color:
                                     index == isSec ? Colors.white : Colors.red,
-                                fontSize: 12)),
+                                fontSize: 12),
                           ),
                         ),
                       ),
@@ -69,7 +69,7 @@ class _notificationState extends State<notification> {
           const Padding(
             padding: EdgeInsets.only(left: 40, top: 20),
             child: Text(
-              "Today",
+              'Today',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
@@ -81,39 +81,35 @@ class _notificationState extends State<notification> {
               borderRadius: BorderRadius.circular(15),
               color: ColorsNeutral.Neutral20,
             ),
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(left: 10, bottom: 28),
-                      child: Image.asset("Assets/notif.png")),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Text(
-                          "New recipe!",
+            child: Row(
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(left: 10, bottom: 28),
+                    child: Image.asset('Assets/notif.png'),),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text(
+                        'New recipe!',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Text(
+                          ' Far far away, behind the word  \n mountains, far from the countries.',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 5),
-                          child: Text(
-                            " Far far away, behind the word  \n mountains, far from the countries.",
-                            style: TextStyle(
-                              color: ColorsNeutral.Neutral40,
-                            ),
+                            color: ColorsNeutral.Neutral40,
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Container(
@@ -127,11 +123,10 @@ class _notificationState extends State<notification> {
             child: Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
                       padding: const EdgeInsets.only(left: 10, bottom: 28),
-                      child: Image.asset("Assets/notif.png")),
+                      child: Image.asset('Assets/notif.png')),
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Column(
@@ -146,7 +141,7 @@ class _notificationState extends State<notification> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 5),
                           child: Text(
-                            "Far far away, behind the word \n mountains, far from the countries.",
+                            'Far far away, behind the word \n mountains, far from the countries.',
                             style: TextStyle(
                               color: ColorsNeutral.Neutral40,
                             ),
@@ -162,7 +157,7 @@ class _notificationState extends State<notification> {
           const Padding(
             padding: EdgeInsets.only(left: 40, top: 20),
             child: Text(
-              "Yesterday",
+              'Yesterday',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
           ),
@@ -177,11 +172,10 @@ class _notificationState extends State<notification> {
             child: Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
                       padding: const EdgeInsets.only(left: 10, bottom: 28),
-                      child: Image.asset("Assets/notif.png")),
+                      child: Image.asset('Assets/notif.png')),
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Column(
@@ -196,7 +190,7 @@ class _notificationState extends State<notification> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 5),
                           child: Text(
-                            "Far far away, behind the word  mountains, \n far from the countries.",
+                            'Far far away, behind the word  mountains, \n far from the countries.',
                             style: TextStyle(color: ColorsNeutral.Neutral40),
                           ),
                         ),

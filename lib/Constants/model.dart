@@ -266,25 +266,23 @@ List<Model3> salad = [
 
 
 
-class ModelAddSaveRe {
-  ModelAddSaveRe( {
-    required this.saveretitle,
-    required this.devlop,
-  });
+class IngredientModel {
+  String qty;
+  String type;
 
-  factory ModelAddSaveRe.fromJson(Map<String, dynamic> json) =>
-      ModelAddSaveRe(
-        saveretitle: json['savTitle'] as String,
-        devlop: json['devlop'] as String,
-      );
-  String saveretitle;
-  String devlop;
+  IngredientModel({required this.qty, required this.type});
 
-  Map<String, dynamic> toJson() =>
-      {
-        'savTitle': saveretitle,
-        'devlop': devlop,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'qty': qty,
+      'type': type,
+    };
+  }
 
-
+  factory IngredientModel.fromJson(Map<String, dynamic> json) {
+    return IngredientModel(
+      qty: json['qty']as String,
+      type: json['type'] as String,
+    );
+  }
 }

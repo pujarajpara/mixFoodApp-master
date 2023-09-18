@@ -1,4 +1,3 @@
-// ignore_for_file: file_names, public_member_api_docs, non_constant_identifier_names, lines_longer_than_80_chars
 
 import 'package:flutter/material.dart';
 
@@ -31,7 +30,7 @@ class ColorsPrimary {
 }
 
 class ColorsSecondary {
-  static Color Secondary100 = const Color(0xff804E00);
+  static Color Secondary100 = const Color(0xff318000);
   static Color Secondary90 = const Color(0xff995E00);
   static Color Secondary80 = const Color(0xffB36D00);
   static Color Secondary70 = const Color(0xffCC7D00);

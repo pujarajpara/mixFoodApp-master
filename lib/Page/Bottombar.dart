@@ -5,6 +5,10 @@ import 'package:mixfoodapp/Page/home.dart';
 import 'package:mixfoodapp/Page/notification.dart';
 import 'package:mixfoodapp/Page/persondetails.dart';
 import 'package:mixfoodapp/Page/saverecipe.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mixfoodapp/controller/lan_change_controller.dart';
+
 
 class Bottomtabbar extends StatefulWidget {
   // final List<IngredientModel> ingre;
@@ -23,7 +27,7 @@ class _BottomtabbarState extends State<Bottomtabbar> {
     const Home(),
     const saveIcon(),
     const notification(),
-    const person(),
+    const Person(),
   ];
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = const Home();

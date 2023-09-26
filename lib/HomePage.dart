@@ -80,7 +80,7 @@ class HomePage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 650),
-                  child: Container(
+                  child: SizedBox(
                     width: 200,
                     height: 50,
                     child: ElevatedButton(

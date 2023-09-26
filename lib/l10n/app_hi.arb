@@ -1,0 +1,77 @@
+
+
+{
+       "createrecipe": "नुस्खा बनाएँ",
+       "ingredients": "सामग्री",
+       "addnewIngredients": "नई सामग्री जोड़ें",
+       "savemyrecipes": "मेरी रेसिपी सहेजें",
+
+   "findbestrecipesforcooking":"खाना पकाने के लिए सर्वोत्तम व्यंजन ढूंढें",
+       "yesterday":"कल",
+       "newrecipe":"नया नुस्खा",
+
+     "dontforgettotryyoursavedrecipe":"अपनी सहेजी गई रेसिपी आज़माना न भूलें",
+
+
+
+
+
+
+
+
+
+
+       "howtomakesushiathome":"घर पर सुशी कैसे बनाएं",
+      "howtomakefrenchtoast":"फ्रेंच टोस्ट कैसे बनाये",
+       "easyoatmealrecipe":"आसान दलिया रेसिपी",
+       "pepeersweetcornramen":"पीपर स्वीटकॉर्न रेमन ",
+       "cheddarcheeseandshellsalad":"चेडर चीज़ और शैल सलाद",
+       "peppersweetcornramen1":"काली मिर्च स्वीटकॉर्न रेमन1",
+       "indonesianchickenburger":"इंडोनेशियाई चिकन बर्गर",
+       "byadriannacurl":"एड्रियाना कर्ल द्वारा",
+       "byjameswolden":"जेम्स वोल्डेन द्वारा",
+       "byrobeeraanny":"रूबीरा एनी द्वारा",
+       "bynikisamaratha":"निकी समरथा द्वारा",
+         "time":"समय",
+         "bentolunchboxidesforwork":"काम के लिए बेंटो लंच बॉक्स विचार",
+         "server":"सर्वर",
+         "cooktime":"पकाने का समय",
+
+         "alessandrablai":"एलेसेंड्रब्लाई",
+         "japanesefriedrice":"जापानी फ्राइड चावल",
+
+"howtomakeitalianspaghettiathome":"घर पर इटैलियन स्पेगेटिएट कैसे बनाएं",
+
+
+
+       "notification": "अधिसूचना",
+       "all": "सभी",
+      "unread": "अपठित ग",
+       "read": "पढ़ना",
+       "today": "आज",
+       "myprofile": "मेरी प्रोफाइल",
+      "editprofile": "प्रोफ़ाइल संपादित करें",
+       "recipe": "व्यंजन विधि",
+       "saved recipes": "सहेजे गए व्यंजन",
+       "findbestrecipesforcookingsearchrecipes":
+       "खाना पकाने की खोज रेसिपी के लिए सर्वोत्तम रेसिपी खोजें",
+       "trandingnow": "अब फैशन में है",
+       "farfarawaybehindthewordmountainsfarfromthecountries":"बहुत दूर, पर्वत शब्द के पीछे, देशों से बहुत दूर.",
+
+"yourreallset":"आप पूरी तरह तैयार हैं!",
+"following":"अगले",
+      "popularcategory": "लोकप्रिय श्रेणी",
+       "salad": "सलाद",
+      "breakfast": "नाश्ता",
+       "appetizer": "भूख बढ़ाने वाला",
+       "noodle": "सिर",
+       "recentrecipe": "ताज़ा नुस्खा",
+       "seeall": "सभी देखें",
+       "followers":"समर्थक",
+       "video":"वीडियो",
+       "popularcreators": "लोकप्रिय रचनाकार",
+       "searchrecipes":"रेसिपी खोजें"
+
+
+
+}

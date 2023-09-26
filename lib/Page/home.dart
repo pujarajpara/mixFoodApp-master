@@ -2,9 +2,13 @@ import 'dart:core';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
 import 'package:mixfoodapp/Constants/text.dart';
+import 'package:mixfoodapp/controller/lan_change_controller.dart';
+import 'package:provider/provider.dart';
+
 
 List<Model> saveVideo = [];
 
@@ -26,19 +30,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
-
-  // List<Model> savere = [];
-  // List<IngredientModel> ingredientList1 = [];
-  // List<dynamic> mergeList = [];
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   mergeList..addAll(ingredientList1)
-  //   ..addAll(savere);
-  //   print(mergeList);
-  // }
-
   int isSec = 0;
   List<String> category = [
     'Salad',
@@ -49,40 +40,20 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   bool save = false;
   int issave = 0;
 
-
-
-  // List<String> savere = [];
-  // List<String> ingredientList = [];
-
-  // List<Model> savere = [];
-  // List<Model> savere = [];
-  // List<IngredientModel> ingredientList1 = [];
-  //
-  // List mergeList = [];
-  //
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   mergeList.addAll(ingredientList1);
-  //   mergeList.addAll(savere);
-  //
-  //
-  // }
-
   final PageStorageBucket bucket = PageStorageBucket();
 
   @override
   Widget build(BuildContext context) {
+    final save =Provider.of<LanguageChangeControllerProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 20, top: 80, right: 120),
               child: Text(
-                'Find best recipes \nfor Cooking',
+               AppLocalizations.of(context)!.findbestrecipesforcooking,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
@@ -96,7 +67,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  hintText: 'Search recipes',
+                  hintText: AppLocalizations.of(context)!.searchrecipes,
                   prefixIcon: const Icon(
                     Icons.search,
                     size: 25,
@@ -105,15 +76,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 30),
+              padding: EdgeInsets.only(left: 20, right: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Tranding now 🔥',
+                   AppLocalizations.of(context)!.trandingnow ,
+                    // 'Tranding now 🔥',
                     style: CustomTextStyle.poppinsBoldh5,
                   ),
-                  const Row(
+                   Row(
                     children: [
                       Icon(
                         Icons.arrow_forward,
@@ -121,7 +93,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         size: 20,
                       ),
                       Text(
-                        'See all',
+                       AppLocalizations.of(context)!.seeall,
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.red,
@@ -143,8 +115,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 itemCount: savere.length,
                 itemBuilder: (_, index) {
                   final data = savere[index];
-
-                  return Column(
+                    return Column(
                     children: [
                       Stack(
                         children: [
@@ -329,7 +300,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         Text(
-                          'Popular category',
+                         AppLocalizations.of(context)!.popularcategory,
                           style: CustomTextStyle.poppinsBoldh5,
                         )
                       ],
@@ -351,7 +322,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       right: 15,
                     ),
                     unselectedLabelColor: Colors.black,
-                    // unselectedLabelStyle: Colors.black,
                     indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.red,
@@ -363,8 +333,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Align(
-                            child: Text('Salad'),
+                          child:  Align(
+                            child: Text(AppLocalizations.of(context)!.salad),
                           ),
                         ),
                       ),
@@ -374,8 +344,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Align(
-                            child: Text('Breakfast'),
+                          child:  Align(
+                            child: Text(AppLocalizations.of(context)!.breakfast),
                           ),
                         ),
                       ),
@@ -385,8 +355,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Align(
-                            child: Text('Appetizer'),
+                          child:  Align(
+                            child: Text(AppLocalizations.of(context)!.appetizer),
                           ),
                         ),
                       ),
@@ -396,8 +366,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Align(
-                            child: Text('Noodle'),
+                          child:  Align(
+                            child: Text(AppLocalizations.of(context)!.noodle),
                           ),
                         ),
                       ),
@@ -497,7 +467,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   bottom: 42,
                                   right: 120,
                                   child: Text(
-                                    'Time',
+                                    AppLocalizations.of(context)!.time,
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: ColorsNeutral.Neutral30,
@@ -617,7 +587,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   bottom: 42,
                                   right: 120,
                                   child: Text(
-                                    'Time',
+                                 AppLocalizations.of(context)!.time,
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: ColorsNeutral.Neutral30,
@@ -731,7 +701,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   bottom: 42,
                                   right: 120,
                                   child: Text(
-                                    "Time",
+                                   AppLocalizations.of(context)!.time,
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: ColorsNeutral.Neutral30,
@@ -835,7 +805,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   bottom: 42,
                                   right: 120,
                                   child: Text(
-                                    "Time",
+                                    AppLocalizations.of(context)!.time,
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: ColorsNeutral.Neutral30,
@@ -865,16 +835,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Recent recipe',
+                            AppLocalizations.of(context)!.recentrecipe,
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20,
                                 color: ColorsNeutral.Neutral90),
                           ),
-                          const Row(
+                           Row(
                             children: [
                               Text(
-                                'See all',
+                               AppLocalizations.of(context)!.seeall,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.red,
@@ -944,13 +914,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Popular creators',
+                        AppLocalizations.of(context)!.popularcreators,
                             style: CustomTextStyle.poppinsBoldh5,
                           ),
-                          const Row(
+                           Row(
                             children: [
                               Text(
-                                'See all',
+                              AppLocalizations.of(context)!.seeall,
                                 style:
                                     TextStyle(fontSize: 15, color: Colors.red),
                               ),
@@ -1006,5 +976,4 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 }
 
-// List<Map<String, dynamic>> savere = [];
-// List<Map<String, dynamic>> ingredientList = [];
+

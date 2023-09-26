@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -10,9 +9,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
 import 'package:mixfoodapp/Page/Bottombar.dart';
-import 'package:mixfoodapp/Page/home.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:mixfoodapp/controller/lan_change_controller.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class createrecipe extends StatefulWidget {
   final List<IngredientModel> ingre;
@@ -46,31 +46,30 @@ class _createrecipeState extends State<createrecipe> {
     if (imageFile != null) {
       print('Selected image path: ${imageFile!.path}');
     }
-
     await _onSaveButtonClick(ingredientList);
   }
 
   Future<void> _showImageSourceModal(BuildContext context) async {
     await showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (BuildContext context) {
         return Column(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
+          children: [
             ListTile(
-              leading: Icon(Icons.camera),
-              title: Text('Camera'),
+              leading: Image.asset('Assets/camera Icon.png'),
+              title: const Text('Camera'),
               onTap: () {
                 Navigator.pop(context);
                 _getImage(ImageSource.camera);
               },
             ),
             ListTile(
-              leading: Icon(Icons.image),
-              title: Text('Gallery'),
+              leading: Image.asset('Assets/gallery Icon.png'),
+              title: const Text('Gallery'),
               onTap: () {
                 Navigator.pop(context);
                 _getImage(ImageSource.gallery);
@@ -121,10 +120,6 @@ class _createrecipeState extends State<createrecipe> {
     );
   }
 
-  // Future<void> Save() async {
-  //   await _onSaveButtonClick(ingredientList);
-  // }
-
   Future<void> _loadData() async {
     final prefs = await SharedPreferences.getInstance();
     final jsonData = prefs.getString('data');
@@ -153,6 +148,8 @@ class _createrecipeState extends State<createrecipe> {
 
   @override
   Widget build(BuildContext context) {
+    final createprovider =
+        Provider.of<LanguageChangeControllerProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -181,7 +178,7 @@ class _createrecipeState extends State<createrecipe> {
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 20),
               child: Text(
-                'Create recipe',
+                AppLocalizations.of(context)!.createrecipe,
                 style: TextStyle(
                   color: ColorsNeutral.Neutral90,
                   fontWeight: FontWeight.bold,
@@ -243,45 +240,7 @@ class _createrecipeState extends State<createrecipe> {
                           color: Colors.red,
                         ),
                         onPressed: () async {
-                          _showImageSourceModal(context);
-                          // await showMenu(
-                          //   context: context,
-                          //   position: RelativeRect.fill,
-                          //   items: [
-                          //     PopupMenuItem(
-                          //       value: ImageSource.camera,
-                          //       child: ListTile(
-                          //         leading: SizedBox(
-                          //             height: 30,
-                          //             child: Image.asset(
-                          //               'Assets/camera Icon.png',
-                          //             )),
-                          //         title: const Text(
-                          //           'Camera',
-                          //           style: TextStyle(
-                          //               fontSize: 18, color: Colors.black),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     PopupMenuItem(
-                          //       value: ImageSource.gallery,
-                          //       child: ListTile(
-                          //         leading: SizedBox(
-                          //             height: 30,
-                          //             child: Image.asset(
-                          //               'Assets/gallery Icon.png',
-                          //             )),
-                          //         title: const Text('Gallery'),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ).then(
-                          //   (value) {
-                          //     if (value != null) {
-                          //       _getImage(value);
-                          //     }
-                          //   },
-                          // );
+                          await _showImageSourceModal(context);
                         },
                       ),
                     ),
@@ -299,7 +258,8 @@ class _createrecipeState extends State<createrecipe> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  hintText: ' Bento lunch box ideas for work',
+                  hintText:
+                      AppLocalizations.of(context)!.bentolunchboxidesforwork,
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: const BorderSide(
@@ -323,10 +283,10 @@ class _createrecipeState extends State<createrecipe> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Image.asset('Assets/Serves.png'),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 15),
                     child: Text(
-                      'Server',
+                      AppLocalizations.of(context)!.server,
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
@@ -363,10 +323,10 @@ class _createrecipeState extends State<createrecipe> {
                     padding: const EdgeInsets.only(left: 10),
                     child: Image.asset('Assets/cooktimeicon.png'),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 15),
                     child: Text(
-                      'Cook time',
+                      AppLocalizations.of(context)!.cooktime,
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),

@@ -5,7 +5,6 @@ import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
 import 'package:mixfoodapp/Page/saverecipe.dart';
 
-import '../Constants/text.dart';
 
 class recipede extends StatefulWidget {
   const recipede({Key? key}) : super(key: key);

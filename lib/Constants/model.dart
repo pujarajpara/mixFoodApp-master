@@ -1,7 +1,9 @@
-import 'dart:convert';
 import 'dart:core';
 
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:mixfoodapp/controller/lan_change_controller.dart';
+import 'package:provider/provider.dart';
+
 
 class Models {
   String freslist;
@@ -145,6 +147,7 @@ class Model {
 }
 
 List<Model> savere = [
+
   Model(
     saverecipe: 'Assets/videorecipe1.png',
     duration: '15:10',

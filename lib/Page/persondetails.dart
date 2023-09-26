@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
 import 'package:mixfoodapp/Constants/model.dart';
+import 'package:mixfoodapp/controller/lan_change_controller.dart';
+import 'package:provider/provider.dart';
 
-class person extends StatefulWidget {
-  const person({Key? key}) : super(key: key);
+class Person extends StatefulWidget {
+  const Person({Key? key}) : super(key: key);
 
   @override
-  State<person> createState() => _personState();
+  State<Person> createState() => _PersonState();
 }
 
-class _personState extends State<person> {
-  List mypro1 = ["Video", "Recipe"];
-  List mypro = ["recipe", "Videos", "Followers", "Following"];
+enum Language {english, gujarati, hindi }
+
+class _PersonState extends State<Person> {
+  List mypro1 = ['Video', 'Recipe'];
+  List mypro = ['recipe', 'Videos', 'Followers', 'Following'];
   int isSec = 0;
-  List myfollow = ["Recipe", "Videos", "Followers", "Following"];
-  List myfollownum = ["3", "13", "14K", "120"];
+  List myfollow = ['Recipe', 'Videos', 'Followers', 'Following'];
+  List myfollownum = ['3', '13', '14K', '120'];
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +27,62 @@ class _personState extends State<person> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 20, top: 20),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 20, top: 20),
           child: Text(
-            "My profile",
-            style: TextStyle(
-                color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600),
+            AppLocalizations.of(context)!.myprofile,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20, top: 20),
-            child: Icon(
-              Icons.more_horiz,
-              color: Colors.black,
+            padding: const EdgeInsets.only(right: 20, top: 20),
+            child: Consumer<LanguageChangeControllerProvider>(
+              builder: (context, provider, child) {
+                return PopupMenuButton(
+                  icon: const Icon(Icons.more_horiz,color: Colors.black,),
+                  onSelected: (Language item) {
+                    if (Language.english.name == item.name) {
+                      provider.changeLanguage(const Locale('en'));
+                    } else if (Language.gujarati.name == item.name) {
+                      provider.changeLanguage(const Locale('gu'));
+                    } else {
+                      provider.changeLanguage(const Locale('hi'));
+                    }
+                  },
+
+
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<Language>>[
+                    const PopupMenuItem(
+                      value: Language.english,
+                      child: Text(
+                        'English',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                     ),
+                    const PopupMenuItem(
+                      value: Language.hindi,
+                      child: Text(
+                        'Hindi',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    const PopupMenuItem(
+                      value: Language.gujarati,
+                      child: Text(
+                        'Gujarati',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    // Icon(Icons.more_horiz,color: Colors.black,)
+                  ],
+                );
+              },
             ),
           ),
         ],
@@ -45,7 +92,7 @@ class _personState extends State<person> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 30),
+              padding: const EdgeInsets.only(left: 20, right: 30),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -57,18 +104,19 @@ class _personState extends State<person> {
                       ),
                     ),
                     OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: ColorsPrimary.Primary50)),
-                        onPressed: () {},
-                        child: Text(
-                          "Edit profile",
-                          style: TextStyle(color: ColorsPrimary.Primary50),
-                        )),
+                      style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.redAccent,
+                          side: BorderSide(color: ColorsPrimary.Primary50)),
+                      onPressed: () {},
+                      child: Text(
+                        AppLocalizations.of(context)!.editprofile,
+
+                        style: TextStyle(color: ColorsPrimary.Primary50),
+                      ),
+                    ),
                   ]),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 24),
@@ -76,16 +124,19 @@ class _personState extends State<person> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Text(
-                        "Alessandra Blair",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
+                       Text(
+                      AppLocalizations.of(context)!.alessandrablair,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
                             bottom: 5, top: 10, right: 24),
                         child: Text(
-                          '''  Hello world I’m Alessandra Blair, I’m 
+                          '''
+  Hello world I’m Alessandra Blair, I’m
   from Italy 🏳‍🌈 I love cooking so much!  ''',
                           style: TextStyle(
                               color: ColorsNeutral.Neutral40, fontSize: 14),
@@ -96,52 +147,92 @@ class _personState extends State<person> {
                 ),
               ],
             ),
-             Padding(
-               padding: const EdgeInsets.only(top: 25),
-               child: Row(
+            Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Column(
                     children: [
-                      Text("Recipe",style: TextStyle(color: ColorsNeutral.Neutral40,fontSize: 12),),
+                      Text(
+                        AppLocalizations.of(context)!.recipe,
+                        // 'Recipe',
+                        style: TextStyle(
+                            color: ColorsNeutral.Neutral40, fontSize: 12),
+                      ),
                       const Padding(
                         padding: EdgeInsets.only(top: 10),
                       ),
-                      Text("3",style: TextStyle(color: ColorsNeutral.Neutral90,fontWeight: FontWeight.w600,fontSize: 20),)
+                      Text(
+                        '3',
+                        style: TextStyle(
+                            color: ColorsNeutral.Neutral90,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20),
+                      ),
                     ],
                   ),
                   Column(
                     children: [
-                      Text("Videos",style: TextStyle(color: ColorsNeutral.Neutral40,fontSize: 12)),
-                      Padding(
+                      Text(AppLocalizations.of(context)!.video,
+                          style: TextStyle(
+                              color: ColorsNeutral.Neutral40, fontSize: 12)),
+                      const Padding(
                         padding: EdgeInsets.only(top: 10),
                       ),
-                      Text("13",style: TextStyle(fontSize:20,color: ColorsNeutral.Neutral90,fontWeight: FontWeight.w600),)
+                      Text(
+                        '13',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: ColorsNeutral.Neutral90,
+                            fontWeight: FontWeight.w600),
+                      )
                     ],
                   ),
                   Column(
                     children: [
-                      Text("Followers",style: TextStyle(color: ColorsNeutral.Neutral40,fontSize: 12),),
-                      Padding(
+                      Text(
+                        AppLocalizations.of(context)!.followers,
+                        // 'Followers',
+                        style: TextStyle(
+                            color: ColorsNeutral.Neutral40, fontSize: 12),
+                      ),
+                      const Padding(
                         padding: EdgeInsets.only(top: 10),
                       ),
-                      Text("14K",style: TextStyle(color: ColorsNeutral.Neutral90,fontWeight: FontWeight.w600,fontSize: 20),)
+                      Text(
+                        '14K',
+                        style: TextStyle(
+                            color: ColorsNeutral.Neutral90,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20),
+                      )
                     ],
                   ),
                   Column(
                     children: [
-                      Text("Following",style: TextStyle(color: ColorsNeutral.Neutral40,fontSize: 12),),
-                      Padding(
+                      Text(
+                         AppLocalizations.of(context)!.following,
+                        style: TextStyle(
+                            color: ColorsNeutral.Neutral40, fontSize: 12),
+                      ),
+                      const Padding(
                         padding: EdgeInsets.only(top: 10),
                       ),
-                      Text("120",style: TextStyle(color: ColorsNeutral.Neutral90,fontWeight: FontWeight.w600,fontSize: 20),)
+                      Text(
+                        '120',
+                        style: TextStyle(
+                            color: ColorsNeutral.Neutral90,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20),
+                      )
                     ],
                   )
                 ],
+              ),
             ),
-             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 30),
+            const Padding(
+              padding: EdgeInsets.only(top: 30),
               child: Divider(
                 height: 10,
                 thickness: 1,
@@ -252,7 +343,7 @@ class _personState extends State<person> {
                             child: Row(
                               children: [
                                 Text(
-                                  myprofileinf[index].recipename,
+                                myprofileinf[index].recipename,
                                   style: TextStyle(
                                       color: ColorsNeutral.Neutral0,
                                       fontSize: 16),
@@ -284,7 +375,7 @@ class _personState extends State<person> {
                           Padding(
                             padding: const EdgeInsets.only(top: 160, left: 20),
                             child: Text(
-                              "12 Ingredients | 40 min",
+                              '12 Ingredients | 40 min',
                               style: TextStyle(
                                   color: ColorsNeutral.Neutral0,
                                   fontSize: 12,
@@ -294,7 +385,7 @@ class _personState extends State<person> {
                         ],
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 20))
+                    const Padding(padding: EdgeInsets.only(top: 20))
                   ],
                 );
               },

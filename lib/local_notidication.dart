@@ -17,7 +17,9 @@ class LocalNotification {
 
     const initializationSetting = InitializationSettings(
         android: androidInitilze, iOS: initializationSettingsDarwin);
+  //  await _localNotification.initialize(initializationSettings,onSelectNotification:selectNotification);
     await _localNotification.initialize(initializationSetting);
+
   }
 
   static Future<void> showBigTextNotification({
@@ -35,5 +37,6 @@ class LocalNotification {
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
 
     await _localNotification.show(id, title, body, not);
+
   }
 }

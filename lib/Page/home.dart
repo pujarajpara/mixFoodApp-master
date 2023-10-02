@@ -53,7 +53,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             Padding(
               padding: EdgeInsets.only(left: 20, top: 80, right: 120),
               child: Text(
-               AppLocalizations.of(context)!.findbestrecipesforcooking,
+                AppLocalizations.of(context)!.findbestrecipesforcooking,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
@@ -80,14 +80,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                   AppLocalizations.of(context)!.trandingnow ,
-                    // 'Tranding now 🔥',
-                    style: CustomTextStyle.poppinsBoldh5,
+                  Row(
+                    children: [
+                      Text(
+                       AppLocalizations.of(context)!.trandingnow  ,
+                        style: CustomTextStyle.poppinsBoldh5,
+                      ),
+                      Text('🔥')
+                    ],
                   ),
                    Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward,
                         color: Colors.red,
                         size: 20,

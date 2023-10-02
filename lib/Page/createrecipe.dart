@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mixfoodapp/Constants/Color.dart';
@@ -12,10 +13,10 @@ import 'package:mixfoodapp/Page/Bottombar.dart';
 import 'package:mixfoodapp/controller/lan_change_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class createrecipe extends StatefulWidget {
   final List<IngredientModel> ingre;
+
 
   const createrecipe({
     super.key,
@@ -140,6 +141,7 @@ class _createrecipeState extends State<createrecipe> {
     });
   }
 
+
   void updateIngredient(int index, IngredientModel newIngredient) {
     setState(() {
       ingredientList[index] = newIngredient;
@@ -148,8 +150,8 @@ class _createrecipeState extends State<createrecipe> {
 
   @override
   Widget build(BuildContext context) {
-    final createprovider =
-        Provider.of<LanguageChangeControllerProvider>(context);
+    final createprovider=Provider.of<LanguageChangeControllerProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -284,11 +286,11 @@ class _createrecipeState extends State<createrecipe> {
                     child: Image.asset('Assets/Serves.png'),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 15),
+                    padding: const EdgeInsets.only(left: 15),
                     child: Text(
                       AppLocalizations.of(context)!.server,
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                   ),
                   const Spacer(),
@@ -384,8 +386,8 @@ class _createrecipeState extends State<createrecipe> {
                   padding: const EdgeInsets.all(20),
                   child: GestureDetector(
                     onTap: addEmptyIngredient,
-                    child: const Text(
-                      '+ Add new Ingredient',
+                    child:  Text(
+                      AppLocalizations.of(context)!.addnewIngredients,
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 18,
@@ -410,10 +412,10 @@ class _createrecipeState extends State<createrecipe> {
                       Radius.circular(10),
                     ),
                   ),
-                  child: const Center(
+                  child:  Center(
                     child: Text(
-                      'Save my recipes',
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.savemyrecipes,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -428,26 +430,7 @@ class _createrecipeState extends State<createrecipe> {
       ),
     );
   }
-  //
-  // _imgFromGallery() async {
-  //   await picker
-  //       .pickImage(source: ImageSource.gallery, imageQuality: 50)
-  //       .then((value) {
-  //     if (value != null) {
-  //       _cropImage(File(value.path));
-  //     }
-  //   });
-  // }
 
-  // _imgFromCamera() async {
-  //   await picker
-  //       .pickImage(source: ImageSource.camera, imageQuality: 50)
-  //       .then((value) {
-  //     if (value != null) {
-  //       _cropImage(File(value.path));
-  //     }
-  //   });
-  // }
 
   _cropImage(File imgFile) async {
     final croppedFile = await ImageCropper().cropImage(

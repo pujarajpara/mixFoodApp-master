@@ -57,6 +57,10 @@
        "खाना पकाने की खोज रेसिपी के लिए सर्वोत्तम रेसिपी खोजें",
        "trandingnow": "अब फैशन में है",
        "farfarawaybehindthewordmountainsfarfromthecountries":"बहुत दूर, पर्वत शब्द के पीछे, देशों से बहुत दूर.",
+       "scheduleNotification":"अनुसूची अधिसूचना",
+       "showDelayedNotification":"विलंबित अधिसूचना दिखाएं",
+       "showImmediateNotification":"तत्काल अधिसूचना दिखाएं",
+       "selectNotificationOption":"अधिसूचना विकल्प चुनें",
 
 "yourreallset":"आप पूरी तरह तैयार हैं!",
 "following":"अगले",
@@ -71,6 +75,7 @@
        "video":"वीडियो",
        "popularcreators": "लोकप्रिय रचनाकार",
        "searchrecipes":"रेसिपी खोजें"
+
 
 
 

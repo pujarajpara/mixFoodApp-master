@@ -2,11 +2,18 @@
       "createrecipe": "Create recipe",
 "farfarawaybehindthewordmountainsfarfromthecountries":"Far far away, behind the word  mountains, \n far from the countries.",
       "following":"Following",
-      "yourreallset":"Your're all set!",
+
+             "scheduleNotification":"Schedule Notification",
+             "showDelayedNotification":"ShowDelayed Notification",
+             "showImmediateNotification":"ShowImmediate Notification",
+             "selectNotificationOption":"Select NotificationOption",
+
+
+            "yourreallset":"Your're all set!",
             "yesterday":"Yesterday",
              "newrecipe":"New recipe",
             "dontforgettotryyoursavedrecipe":"Don't forget to try your saved recipe",
-        "findbestrecipesforcooking":"Find best recipes \nfor Cooki",
+        "findbestrecipesforcooking":"Find best recipes \nfor Cooking",
      "howtomakesushiathome":"How to make sushi at home",
       "howtomakefrenchtoast":"How to make french toast",
        "easyoatmealrecipe":"Easy oatmeal recipe",

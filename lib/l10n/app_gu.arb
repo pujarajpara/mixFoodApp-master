@@ -6,13 +6,18 @@
        "savemyrecipes": "મારી વાનગીઓ સાચવો",
        "notification": "સૂચના",
        "all": "બધા",
-   "createrecipe":"રેસીપી બનાવો",
+
+              "scheduleNotification":"શેડ્યૂલ સૂચના",
+              "showDelayedNotification":"વિલંબિત સૂચના બતાવો",
+              "showImmediateNotification":"તાત્કાલિક સૂચના બતાવો",
+              "selectNotificationOption":"સૂચના વિકલ્પ પસંદ કરો",
+
      "yesterday":"ગઇકાલે",
      "youreallset":"તમે તૈયાર છો!",
 
      "farfarawaybehindthewordmountainsfarfromthecountries":"દૂર દૂર, પર્વતો શબ્દની પાછળ, \n દેશોથી દૂર.",
 
-         "findbestrecipesforCooking":"રસોઈ માટે શ્રેષ્ઠ વાનગીઓ શોધો",
+         "findbestrecipesforcooking":"રસોઈ માટે શ્રેષ્ઠ વાનગીઓ શોધો",
        "newrecipe":"નવી રેસીપી",
      "dontforgettotryyoursavedrecipe":"તમારી સાચવેલી રેસીપી અજમાવવાનું ભૂલશો નહીં",
      "unread": "વાંચ્યા વગરનું",
@@ -48,7 +53,7 @@
        "રસોઈ શોધ વાનગીઓ માટે શ્રેષ્ઠ વાનગીઓ શોધો",
        "searchrecipes": "વાનગીઓ શોધો",
        "trandingnow": "હાલમાં વલણમાં છે",
-       "see all": "બધા જુઓ",
+       "seeall": "બધા જુઓ",
     "popularcategory": "લોકપ્રિય શ્રેણી",
        "salad": "કચુંબર",
        "breakfast": "નાસ્તો",
